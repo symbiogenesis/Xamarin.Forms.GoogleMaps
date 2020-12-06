@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media.Imaging;
 using Xamarin.Forms.GoogleMaps;
 
-namespace Xamarin.Forms.GoogleMaps.Extensions.UWP
+namespace Xamarin.Forms.GoogleMaps.UWP.Extensions
 {
     internal static class BitmapDescriptorExtensions
     {

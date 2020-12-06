@@ -63,8 +63,11 @@ namespace XFGoogleMapSample.UWP
                 {
                     typeof(Xamarin.Forms.GoogleMaps.UWP.MapRenderer).GetTypeInfo().Assembly
                 };
+
+                Xamarin.Forms.Forms.SetFlags("Brush_Experimental");
+
                 Xamarin.Forms.Forms.Init(e, rendererAssemblies);
-                Xamarin.FormsGoogleMaps.Init(Variables.BING_MAPS_UWP_API_KEY);
+                Xamarin.FormsGoogleMaps.Init("SozxlxBvzZfK6LlQEq5F~dLBcJzIY2wRUXyTUkf9MKA~AiiXbFbX1V30XP-pqSVWAapQ95M9Ddk50_Y0tAaydX3I8Z5H8XDBI1a8oAa9ONIA");
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

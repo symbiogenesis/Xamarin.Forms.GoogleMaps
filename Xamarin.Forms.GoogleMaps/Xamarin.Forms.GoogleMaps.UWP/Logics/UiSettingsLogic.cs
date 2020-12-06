@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls.Maps;
+﻿using Windows.UI.Xaml.Controls.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 {
@@ -15,25 +10,31 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         protected override void OnUpdateCompassEnabled()
         {
+            //TODO OnUpdateCompassEnabled
+            System.Diagnostics.Debug.WriteLine("TODO: OnUpdateCompassEnabled");
         }
 
         protected override void OnUpdateRotateGesturesEnabled()
         {
-            NativeMap.RotateInteractionMode = Map.HasRotationEnabled ? 
+            NativeMap.RotateInteractionMode = Map.UiSettings.RotateGesturesEnabled ? 
                 MapInteractionMode.Auto : MapInteractionMode.Disabled;
 
-            if (Map.HasRotationEnabled != Map.UiSettings.RotateGesturesEnabled)
+            if (Map.UiSettings.RotateGesturesEnabled != Map.UiSettings.RotateGesturesEnabled)
             {
-                Map.HasRotationEnabled = Map.UiSettings.RotateGesturesEnabled;
+                Map.UiSettings.RotateGesturesEnabled = Map.UiSettings.RotateGesturesEnabled;
             }
         }
 
         protected override void OnUpdateMyLocationButtonEnabled()
         {
+            //TODO OnUpdateMyLocationButtonEnabled
+            System.Diagnostics.Debug.WriteLine("TODO: OnUpdateMyLocationButtonEnabled");
         }
 
         protected override void OnUpdateIndoorLevelPickerEnabled()
         {
+            //TODO OnUpdateIndoorLevelPickerEnabled
+            System.Diagnostics.Debug.WriteLine("TODO: OnUpdateIndoorLevelPickerEnabled");
         }
 
         protected override void OnUpdateScrollGesturesEnabled()
@@ -41,9 +42,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             NativeMap.PanInteractionMode = Map.UiSettings.ScrollGesturesEnabled ?
                 MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
 
-            if (Map.HasScrollEnabled != Map.UiSettings.ScrollGesturesEnabled)
+            if (Map.UiSettings.ScrollGesturesEnabled != Map.UiSettings.ScrollGesturesEnabled)
             {
-                Map.HasScrollEnabled = Map.UiSettings.ScrollGesturesEnabled;
+                Map.UiSettings.ScrollGesturesEnabled = Map.UiSettings.ScrollGesturesEnabled;
             }
         }
 
@@ -65,7 +66,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         protected override void OnUpdateMapToolbarEnabled()
         {
-            // no-op
+            //TODO OnUpdateMapToolbarEnabled
+            System.Diagnostics.Debug.WriteLine("TODO: OnUpdateMapToolbarEnabled");
         }
 
         private void UpdateZoomControlAndGesturesEnabled()

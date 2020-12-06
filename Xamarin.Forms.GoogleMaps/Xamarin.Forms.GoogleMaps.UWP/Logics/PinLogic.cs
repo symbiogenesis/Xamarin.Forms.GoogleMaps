@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
-using Xamarin.Forms.GoogleMaps.Extensions.UWP;
+using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 using Xamarin.Forms.GoogleMaps.UWP;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
@@ -22,8 +22,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                 newNativeMap.MapHolding += NewNativeMap_MapHolding;
             }
         }
-
-
 
         internal override void Unregister(MapControl nativeMap, Map map)
         {
