@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -18,6 +18,7 @@ using Android.Widget;
 using Android.Views;
 using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Android.Util;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -26,9 +27,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
         GoogleMap.IOnMapLongClickListener,
         GoogleMap.IOnMyLocationButtonClickListener
     {
-        readonly CameraLogic _cameraLogic;
-        readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
-        
+        private readonly CameraLogic _cameraLogic;
+        private readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
+
         internal IList<BaseLogic<GoogleMap>> Logics { get; }
 
         public MapRenderer(Context context) : base(context)
@@ -41,15 +42,17 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(context, Config.BitmapDescriptorFactory, 
+                new PinLogic(context, Config.BitmapDescriptorFactory,
                     OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
                 new GroundOverlayLogic(context, Config.BitmapDescriptorFactory)
             };
         }
 
-        static Bundle s_bundle;
-        internal static Bundle Bundle { set { s_bundle = value; } }
+        private static Bundle s_bundle;
+
+        internal static Bundle Bundle
+        { set { s_bundle = value; } }
 
         protected internal static PlatformConfig Config { protected get; set; }
 
@@ -105,8 +108,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     oldMap = e.OldElement;
                     Uninitialize(oldNativeMap, oldMap);
                     oldNativeView?.Dispose();
-                } 
-                catch (System.Exception ex) 
+                }
+                catch (System.Exception ex)
                 {
                     var message = ex.Message;
                     System.Diagnostics.Debug.WriteLine($"Uninitialize old view failed. - {message}");
@@ -123,10 +126,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
             mapView.OnResume();
             SetNativeControl(mapView);
 
-            var activity = Context as Activity;
-            if (activity != null)
+            var metrics = Resources.DisplayMetrics;
+
+            if (metrics != null)
             {
-                _scaledDensity = activity.GetScaledDensity();
+                _scaledDensity = metrics.ScaledDensity;
                 _cameraLogic.ScaledDensity = _scaledDensity;
                 foreach (var logic in Logics)
                 {
@@ -165,6 +169,18 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
                 _uiSettingsLogic.Register(map, nativeMap);
                 Map.OnSnapshot += OnSnapshot;
+
+                Map.OnFromScreenLocation = point =>
+                {
+                    var latLng = nativeMap.Projection.FromScreenLocation(new global::Android.Graphics.Point((int)point.X, (int)point.Y));
+                    return latLng.ToPosition();
+                };
+
+                Map.OnToScreenLocation = position =>
+                {
+                    var pt = nativeMap.Projection.ToScreenLocation(position.ToLatLng());
+                    return new Point(pt.X, pt.Y);
+                };
 
                 nativeMap.SetOnMapClickListener(this);
                 nativeMap.SetOnMapLongClickListener(this);
@@ -320,7 +336,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         }
 
         private void UpdateHasZoomEnabled(
-            bool? initialZoomControlsEnabled = null, 
+            bool? initialZoomControlsEnabled = null,
             bool? initialZoomGesturesEnabled = null)
         {
 #pragma warning disable 618
@@ -349,11 +365,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
         private void UpdateMapStyle()
         {
             NativeMap.SetMapStyle(Map.MapStyle != null ?
-                new MapStyleOptions(Map.MapStyle.JsonStyle) : 
+                new MapStyleOptions(Map.MapStyle.JsonStyle) :
                 null);
         }
 
-        void SetMapType()
+        private void SetMapType()
         {
             var map = NativeMap;
             if (map == null)
@@ -364,28 +380,33 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 case MapType.Street:
                     map.MapType = GoogleMap.MapTypeNormal;
                     break;
+
                 case MapType.Satellite:
                     map.MapType = GoogleMap.MapTypeSatellite;
                     break;
+
                 case MapType.Hybrid:
                     map.MapType = GoogleMap.MapTypeHybrid;
                     break;
+
                 case MapType.Terrain:
                     map.MapType = GoogleMap.MapTypeTerrain;
                     break;
+
                 case MapType.None:
                     map.MapType = GoogleMap.MapTypeNone;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        void SetPadding()
+        private void SetPadding()
         {
             NativeMap?.SetPadding(
-                (int)(Map.Padding.Left * _scaledDensity), 
-                (int)(Map.Padding.Top * _scaledDensity), 
+                (int)(Map.Padding.Left * _scaledDensity),
+                (int)(Map.Padding.Top * _scaledDensity),
                 (int)(Map.Padding.Right * _scaledDensity),
                 (int)(Map.Padding.Bottom * _scaledDensity));
         }
@@ -405,7 +426,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return Map.SendMyLocationClicked();
         }
 
-        void UpdateVisibleRegion(LatLng pos)
+        private void UpdateVisibleRegion(LatLng pos)
         {
             var map = NativeMap;
             if (map == null)
@@ -474,9 +495,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
         }
 
-        #endregion
+        #endregion Overridable Members
 
-        private void Uninitialize(GoogleMap nativeMap, Map map) 
+        private void Uninitialize(GoogleMap nativeMap, Map map)
         {
             try
             {
@@ -516,7 +537,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        bool _disposed;
+        private bool _disposed;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && !_disposed)

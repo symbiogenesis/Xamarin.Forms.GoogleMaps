@@ -39,12 +39,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var opts = new PolylineOptions();
 
             foreach (var p in outerItem.Positions)
-                opts.Add(new LatLng(p.Latitude, p.Longitude));
+                opts = opts.Add(new LatLng(p.Latitude, p.Longitude));
 
-            opts.InvokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
-            opts.InvokeColor(outerItem.StrokeColor.ToAndroid());
-            opts.Clickable(outerItem.IsClickable);
-            opts.InvokeZIndex(outerItem.ZIndex);
+            opts = opts.InvokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
+            opts = opts.InvokeColor(outerItem.StrokeColor.ToAndroid());
+            opts = opts.Clickable(outerItem.IsClickable);
+            opts = opts.InvokeZIndex(outerItem.ZIndex);
 
             var nativePolyline = NativeMap.AddPolyline(opts);
 
@@ -72,7 +72,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             return nativeShape;
         }
 
-        void OnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs e)
+        private void OnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs e)
         {
             // clicked polyline
             var nativeItem = e.Polyline;
@@ -107,4 +107,3 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         }
     }
 }
-
