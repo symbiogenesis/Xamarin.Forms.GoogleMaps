@@ -16,7 +16,7 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public class Map : View, IEnumerable<Pin>
     {
-        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(IEnumerable), typeof(IEnumerable), typeof(Map), default(IEnumerable),
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(Map), default(IEnumerable),
             propertyChanged: (b, o, n) => ((Map)b).OnItemsSourcePropertyChanged((IEnumerable)o, (IEnumerable)n));
 
         public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(Map), default(DataTemplate),
@@ -48,14 +48,14 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
             nameof(InitialCameraUpdate), typeof(CameraUpdate), typeof(Map),
             CameraUpdateFactory.NewPositionZoom(new Position(41.89, 12.49), 10),  // center on Rome by default
-            propertyChanged: (bindable, oldValue, newValue) => 
+            propertyChanged: (bindable, oldValue, newValue) =>
             {
-                ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;   
+                ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;
             });
 
         public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(PaddingProperty), typeof(Thickness), typeof(Map), default(Thickness));
 
-        bool _useMoveToRegisonAsInitialBounds = true;
+        private bool _useMoveToRegisonAsInitialBounds = true;
 
         public static readonly BindableProperty CameraPositionProperty = BindableProperty.Create(
             nameof(CameraPosition), typeof(CameraPosition), typeof(Map),
@@ -64,30 +64,40 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty MapStyleProperty = BindableProperty.Create(nameof(MapStyle), typeof(MapStyle), typeof(Map), null);
 
-        readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
-        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
-        readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
-        readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
-        readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
-        readonly ObservableCollection<GroundOverlay> _groundOverlays = new ObservableCollection<GroundOverlay>();
+        private readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
+        private readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
+        private readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
+        private readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
+        private readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
+        private readonly ObservableCollection<GroundOverlay> _groundOverlays = new ObservableCollection<GroundOverlay>();
 
         public event EventHandler<PinClickedEventArgs> PinClicked;
+
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
+
         public event EventHandler<InfoWindowClickedEventArgs> InfoWindowClicked;
+
         public event EventHandler<InfoWindowLongClickedEventArgs> InfoWindowLongClicked;
 
         public event EventHandler<PinDragEventArgs> PinDragStart;
+
         public event EventHandler<PinDragEventArgs> PinDragEnd;
+
         public event EventHandler<PinDragEventArgs> PinDragging;
 
         public event EventHandler<MapClickedEventArgs> MapClicked;
+
         public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
+
         public event EventHandler<MyLocationButtonClickedEventArgs> MyLocationButtonClicked;
 
         [Obsolete("Please use Map.CameraIdled instead of this")]
         public event EventHandler<CameraChangedEventArgs> CameraChanged;
+
         public event EventHandler<CameraMoveStartedEventArgs> CameraMoveStarted;
+
         public event EventHandler<CameraMovingEventArgs> CameraMoving;
+
         public event EventHandler<CameraIdledEventArgs> CameraIdled;
 
         internal Action<MoveToRegionMessage> OnMoveToRegion { get; set; }
@@ -96,7 +106,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal Action<CameraUpdateMessage> OnAnimateCamera { get; set; }
 
-        internal Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
+        internal Action<TakeSnapshotMessage> OnSnapshot { get; set; }
 
         MapSpan _visibleRegion;
         MapRegion _region;
@@ -149,8 +159,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public bool IsIndoorEnabled
         {
-            get { return (bool) GetValue(IndoorEnabledProperty); }
-            set { SetValue(IndoorEnabledProperty, value);}
+            get { return (bool)GetValue(IndoorEnabledProperty); }
+            set { SetValue(IndoorEnabledProperty, value); }
         }
 
         [Obsolete("Please use Map.MyLocationEnabled and Map.UiSettings.MyLocationButtonEnabled instead of this")]
@@ -330,7 +340,6 @@ namespace Xamarin.Forms.GoogleMaps
             return comp.Task;
         }
 
-
         public Task<Stream> TakeSnapshot()
         {
             var comp = new TaskCompletionSource<Stream>();
@@ -340,38 +349,38 @@ namespace Xamarin.Forms.GoogleMaps
             return comp.Task;
         }
 
-        void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Cast<Pin>().Any(pin => pin.Label == null))
                 throw new ArgumentException("Pin must have a Label to be added to a map");
         }
 
-        void PolylinesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void PolylinesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Cast<Polyline>().Any(polyline => polyline.Positions.Count < 2))
                 throw new ArgumentException("Polyline must have a 2 positions to be added to a map");
         }
 
-        void PolygonsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void PolygonsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Cast<Polygon>().Any(polygon => polygon.Positions.Count < 3))
                 throw new ArgumentException("Polygon must have a 3 positions to be added to a map");
         }
 
-        void CirclesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void CirclesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Cast<Circle>().Any(circle => (
                 circle?.Center == null || circle?.Radius == null || circle.Radius.Meters <= 0f)))
                 throw new ArgumentException("Circle must have a center and radius");
         }
 
-        void TileLayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void TileLayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //if (e.NewItems != null && e.NewItems.Cast<ITileLayer>().Any(tileLayer => (circle.Center == null || circle.Radius == null || circle.Radius.Meters <= 0f)))
             //  throw new ArgumentException("Circle must have a center and radius");
         }
 
-        void GroundOverlays_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void GroundOverlays_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
         }
 
@@ -380,7 +389,7 @@ namespace Xamarin.Forms.GoogleMaps
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
         }
 
-        void OnItemTemplateSelectorPropertyChanged()
+        private void OnItemTemplateSelectorPropertyChanged()
         {
             _pins.Clear();
             CreatePinItems();
@@ -462,22 +471,22 @@ namespace Xamarin.Forms.GoogleMaps
             OnMoveToRegion?.Invoke(message);
         }
 
-        void SendMoveCamera(CameraUpdateMessage message)
+        private void SendMoveCamera(CameraUpdateMessage message)
         {
             OnMoveCamera?.Invoke(message);
         }
-    
-        void SendAnimateCamera(CameraUpdateMessage message)
+
+        private void SendAnimateCamera(CameraUpdateMessage message)
         {
             OnAnimateCamera?.Invoke(message);
         }
 
-        void SendTakeSnapshot(TakeSnapshotMessage message)
+        private void SendTakeSnapshot(TakeSnapshotMessage message)
         {
             OnSnapshot?.Invoke(message);
         }
 
-        void OnItemsSourcePropertyChanged(IEnumerable oldItemsSource, IEnumerable newItemsSource)
+        private void OnItemsSourcePropertyChanged(IEnumerable oldItemsSource, IEnumerable newItemsSource)
         {
             if (oldItemsSource is INotifyCollectionChanged ncc)
             {
@@ -493,7 +502,7 @@ namespace Xamarin.Forms.GoogleMaps
             CreatePinItems();
         }
 
-        void OnItemTemplatePropertyChanged(DataTemplate oldItemTemplate, DataTemplate newItemTemplate)
+        private void OnItemTemplatePropertyChanged(DataTemplate oldItemTemplate, DataTemplate newItemTemplate)
         {
             if (newItemTemplate is DataTemplateSelector)
             {
@@ -504,7 +513,7 @@ namespace Xamarin.Forms.GoogleMaps
             CreatePinItems();
         }
 
-        void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
@@ -514,17 +523,20 @@ namespace Xamarin.Forms.GoogleMaps
                     foreach (object item in e.NewItems)
                         CreatePin(item);
                     break;
+
                 case NotifyCollectionChangedAction.Move:
                     if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
                         goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
+
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldStartingIndex == -1)
                         goto case NotifyCollectionChangedAction.Reset;
                     foreach (object item in e.OldItems)
                         RemovePin(item);
                     break;
+
                 case NotifyCollectionChangedAction.Replace:
                     if (e.OldStartingIndex == -1)
                         goto case NotifyCollectionChangedAction.Reset;
@@ -533,13 +545,14 @@ namespace Xamarin.Forms.GoogleMaps
                     foreach (object item in e.NewItems)
                         CreatePin(item);
                     break;
+
                 case NotifyCollectionChangedAction.Reset:
                     _pins.Clear();
                     break;
             }
         }
 
-        void CreatePinItems()
+        private void CreatePinItems()
         {
             if (ItemsSource == null || (ItemTemplate == null && ItemTemplateSelector == null))
             {
@@ -552,7 +565,7 @@ namespace Xamarin.Forms.GoogleMaps
             }
         }
 
-        void CreatePin(object newItem)
+        private void CreatePin(object newItem)
         {
             DataTemplate itemTemplate = ItemTemplate;
             if (itemTemplate == null)
@@ -566,7 +579,7 @@ namespace Xamarin.Forms.GoogleMaps
             _pins.Add(pin);
         }
 
-        void RemovePin(object itemToRemove)
+        private void RemovePin(object itemToRemove)
         {
             Pin pinToRemove = _pins.FirstOrDefault(pin => pin.BindingContext?.Equals(itemToRemove) == true);
             if (pinToRemove != null)
