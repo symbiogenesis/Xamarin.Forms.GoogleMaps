@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -213,9 +213,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        void InitializeLogic()
+        private void InitializeLogic()
         {
-            _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
+            if (Map?.InitialCameraUpdate != null)
+            {
+                _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
+            }
 
             foreach (var logic in Logics)
             {
