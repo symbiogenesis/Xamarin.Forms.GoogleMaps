@@ -53,7 +53,25 @@ namespace Xamarin.Forms.GoogleMaps
                 ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;
             });
 
-        public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(PaddingProperty), typeof(Thickness), typeof(Map), default(Thickness));
+        public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Map), default(Thickness));
+
+        public static readonly BindableProperty PinItemsProperty = BindableProperty.Create(nameof(PinItems), typeof(IEnumerable<Pin>), typeof(Map), default(IEnumerable<Pin>),
+            propertyChanged: (b, o, n) => ((Map)b).OnPinItemsPropertyChanged((IEnumerable<Pin>)o, (IEnumerable<Pin>)n));
+
+        public static readonly BindableProperty PolylineItemsProperty = BindableProperty.Create(nameof(PolylineItems), typeof(IEnumerable<Polyline>), typeof(Map), default(IEnumerable<Polyline>),
+            propertyChanged: (b, o, n) => ((Map)b).OnPolylineItemsPropertyChanged((IEnumerable<Polyline>)o, (IEnumerable<Polyline>)n));
+
+        public static readonly BindableProperty PolygonItemsProperty = BindableProperty.Create(nameof(PolygonItems), typeof(IEnumerable<Polygon>), typeof(Map), default(IEnumerable<Polygon>),
+            propertyChanged: (b, o, n) => ((Map)b).OnPolygonItemsPropertyChanged((IEnumerable<Polygon>)o, (IEnumerable<Polygon>)n));
+
+        public static readonly BindableProperty CircleItemsProperty = BindableProperty.Create(nameof(CircleItems), typeof(IEnumerable<Circle>), typeof(Map), default(IEnumerable<Circle>),
+            propertyChanged: (b, o, n) => ((Map)b).OnCircleItemsPropertyChanged((IEnumerable<Circle>)o, (IEnumerable<Circle>)n));
+
+        public static readonly BindableProperty TileLayerItemsProperty = BindableProperty.Create(nameof(TileLayerItems), typeof(IEnumerable<TileLayer>), typeof(Map), default(IEnumerable<TileLayer>),
+            propertyChanged: (b, o, n) => ((Map)b).OnTileLayerItemsPropertyChanged((IEnumerable<TileLayer>)o, (IEnumerable<TileLayer>)n));
+
+        public static readonly BindableProperty GroundOverlayItemsProperty = BindableProperty.Create(nameof(GroundOverlayItems), typeof(IEnumerable<GroundOverlay>), typeof(Map), default(IEnumerable<GroundOverlay>),
+            propertyChanged: (b, o, n) => ((Map)b).OnGroundOverlayItemsPropertyChanged((IEnumerable<GroundOverlay>)o, (IEnumerable<GroundOverlay>)n));
 
         private bool _useMoveToRegisonAsInitialBounds = true;
 
@@ -108,8 +126,11 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal Action<TakeSnapshotMessage> OnSnapshot { get; set; }
 
-        MapSpan _visibleRegion;
-        MapRegion _region;
+        internal Func<Point, Position> OnFromScreenLocation { get; set; }
+        internal Func<Position, Point> OnToScreenLocation { get; set; }
+
+        private MapSpan _visibleRegion;
+        private MapRegion _region;
 
         //// Simone Marra
         //public static Position _TopLeft = new Position();
@@ -231,6 +252,42 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(ItemTemplateSelectorProperty, value); }
         }
 
+        public IEnumerable<Pin> PinItems
+        {
+            get => (IEnumerable<Pin>)GetValue(PinItemsProperty);
+            set => SetValue(PinItemsProperty, value);
+        }
+
+        public IEnumerable<Polyline> PolylineItems
+        {
+            get => (IEnumerable<Polyline>)GetValue(PolylineItemsProperty);
+            set => SetValue(PolylineItemsProperty, value);
+        }
+
+        public IEnumerable<Polygon> PolygonItems
+        {
+            get => (IEnumerable<Polygon>)GetValue(PolygonItemsProperty);
+            set => SetValue(PolygonItemsProperty, value);
+        }
+
+        public IEnumerable<Circle> CircleItems
+        {
+            get => (IEnumerable<Circle>)GetValue(CircleItemsProperty);
+            set => SetValue(CircleItemsProperty, value);
+        }
+
+        public IEnumerable<TileLayer> TileLayerItems
+        {
+            get => (IEnumerable<TileLayer>)GetValue(TileLayerItemsProperty);
+            set => SetValue(TileLayerItemsProperty, value);
+        }
+
+        public IEnumerable<GroundOverlay> GroundOverlayItems
+        {
+            get => (IEnumerable<GroundOverlay>)GetValue(GroundOverlayItemsProperty);
+            set => SetValue(GroundOverlayItemsProperty, value);
+        }
+
         public IList<Pin> Pins
         {
             get { return _pins; }
@@ -323,7 +380,7 @@ namespace Xamarin.Forms.GoogleMaps
             var comp = new TaskCompletionSource<AnimationStatus>();
 
             SendMoveCamera(new CameraUpdateMessage(cameraUpdate, null, new DelegateAnimationCallback(
-                () => comp.SetResult(AnimationStatus.Finished), 
+                () => comp.SetResult(AnimationStatus.Finished),
                 () => comp.SetResult(AnimationStatus.Canceled))));
 
             return comp.Task;
@@ -513,6 +570,360 @@ namespace Xamarin.Forms.GoogleMaps
             CreatePinItems();
         }
 
+        private void OnPinItemsPropertyChanged(IEnumerable<Pin> oldItemsSource, IEnumerable<Pin> newItemsSource)
+        {
+            if (oldItemsSource is INotifyCollectionChanged ncc)
+            {
+                ncc.CollectionChanged -= OnPinItemsCollectionChanged;
+            }
+
+            if (newItemsSource is INotifyCollectionChanged ncc1)
+            {
+                ncc1.CollectionChanged += OnPinItemsCollectionChanged;
+            }
+
+            _pins.Clear();
+
+            foreach (var pin in newItemsSource)
+            {
+                _pins.Add(pin);
+            }
+        }
+
+        private void OnPinItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Pin item in e.NewItems)
+                        _pins.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    // Not tracking order
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Pin item in e.OldItems)
+                        _pins.Remove(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Pin item in e.OldItems)
+                        _pins.Remove(item);
+                    foreach (Pin item in e.NewItems)
+                        _pins.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    _pins.Clear();
+                    break;
+            }
+        }
+
+        private void OnPolylineItemsPropertyChanged(IEnumerable<Polyline> oldItemsSource, IEnumerable<Polyline> newItemsSource)
+        {
+            if (oldItemsSource is INotifyCollectionChanged ncc)
+            {
+                ncc.CollectionChanged -= OnPolylineItemsCollectionChanged;
+            }
+
+            if (newItemsSource is INotifyCollectionChanged ncc1)
+            {
+                ncc1.CollectionChanged += OnPolylineItemsCollectionChanged;
+            }
+
+            _polylines.Clear();
+
+            foreach (var polyline in newItemsSource)
+            {
+                _polylines.Add(polyline);
+            }
+        }
+
+        private void OnPolylineItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Polyline item in e.NewItems)
+                        _polylines.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    // Not tracking order
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Polyline item in e.OldItems)
+                        _polylines.Remove(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Polyline item in e.OldItems)
+                        _polylines.Remove(item);
+                    foreach (Polyline item in e.NewItems)
+                        _polylines.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    _polylines.Clear();
+                    break;
+            }
+        }
+
+        private void OnPolygonItemsPropertyChanged(IEnumerable<Polygon> oldItemsSource, IEnumerable<Polygon> newItemsSource)
+        {
+            if (oldItemsSource is INotifyCollectionChanged ncc)
+            {
+                ncc.CollectionChanged -= OnPolygonItemsCollectionChanged;
+            }
+
+            if (newItemsSource is INotifyCollectionChanged ncc1)
+            {
+                ncc1.CollectionChanged += OnPolygonItemsCollectionChanged;
+            }
+
+            _polygons.Clear();
+
+            foreach (var polygon in newItemsSource)
+            {
+                _polygons.Add(polygon);
+            }
+        }
+
+        private void OnPolygonItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Polygon item in e.NewItems)
+                        _polygons.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    // Not tracking order
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Polygon item in e.OldItems)
+                        _polygons.Remove(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Polygon item in e.OldItems)
+                        _polygons.Remove(item);
+                    foreach (Polygon item in e.NewItems)
+                        _polygons.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    _polygons.Clear();
+                    break;
+            }
+        }
+
+        private void OnCircleItemsPropertyChanged(IEnumerable<Circle> oldItemsSource, IEnumerable<Circle> newItemsSource)
+        {
+            if (oldItemsSource is INotifyCollectionChanged ncc)
+            {
+                ncc.CollectionChanged -= OnCircleItemsCollectionChanged;
+            }
+
+            if (newItemsSource is INotifyCollectionChanged ncc1)
+            {
+                ncc1.CollectionChanged += OnCircleItemsCollectionChanged;
+            }
+
+            _circles.Clear();
+
+            foreach (var circle in newItemsSource)
+            {
+                _circles.Add(circle);
+            }
+        }
+
+        private void OnCircleItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Circle item in e.NewItems)
+                        _circles.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    // Not tracking order
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Circle item in e.OldItems)
+                        _circles.Remove(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (Circle item in e.OldItems)
+                        _circles.Remove(item);
+                    foreach (Circle item in e.NewItems)
+                        _circles.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    _circles.Clear();
+                    break;
+            }
+        }
+
+        private void OnTileLayerItemsPropertyChanged(IEnumerable<TileLayer> oldItemsSource, IEnumerable<TileLayer> newItemsSource)
+        {
+            if (oldItemsSource is INotifyCollectionChanged ncc)
+            {
+                ncc.CollectionChanged -= OnTileLayerItemsCollectionChanged;
+            }
+
+            if (newItemsSource is INotifyCollectionChanged ncc1)
+            {
+                ncc1.CollectionChanged += OnTileLayerItemsCollectionChanged;
+            }
+
+            _tileLayers.Clear();
+
+            foreach (var tileLayer in newItemsSource)
+            {
+                _tileLayers.Add(tileLayer);
+            }
+        }
+
+        private void OnTileLayerItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (TileLayer item in e.NewItems)
+                        _tileLayers.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    // Not tracking order
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (TileLayer item in e.OldItems)
+                        _tileLayers.Remove(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (TileLayer item in e.OldItems)
+                        _tileLayers.Remove(item);
+                    foreach (TileLayer item in e.NewItems)
+                        _tileLayers.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    _tileLayers.Clear();
+                    break;
+            }
+        }
+
+        private void OnGroundOverlayItemsPropertyChanged(IEnumerable<GroundOverlay> oldItemsSource, IEnumerable<GroundOverlay> newItemsSource)
+        {
+            if (oldItemsSource is INotifyCollectionChanged ncc)
+            {
+                ncc.CollectionChanged -= OnGroundOverlayItemsCollectionChanged;
+            }
+
+            if (newItemsSource is INotifyCollectionChanged ncc1)
+            {
+                ncc1.CollectionChanged += OnGroundOverlayItemsCollectionChanged;
+            }
+
+            _groundOverlays.Clear();
+
+            foreach (var groundOverlay in newItemsSource)
+            {
+                _groundOverlays.Add(groundOverlay);
+            }
+        }
+
+        private void OnGroundOverlayItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (GroundOverlay item in e.NewItems)
+                        _groundOverlays.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    // Not tracking order
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (GroundOverlay item in e.OldItems)
+                        _groundOverlays.Remove(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (GroundOverlay item in e.OldItems)
+                        _groundOverlays.Remove(item);
+                    foreach (GroundOverlay item in e.NewItems)
+                        _groundOverlays.Add(item);
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    _groundOverlays.Clear();
+                    break;
+            }
+        }
+
         private void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
@@ -571,9 +982,6 @@ namespace Xamarin.Forms.GoogleMaps
             if (itemTemplate == null)
                 itemTemplate = ItemTemplateSelector?.SelectTemplate(newItem, this);
 
-            if (itemTemplate == null)
-                return;
-
             var pin = (Pin)itemTemplate.CreateContent();
             pin.BindingContext = newItem;
             _pins.Add(pin);
@@ -586,6 +994,26 @@ namespace Xamarin.Forms.GoogleMaps
             {
                 _pins.Remove(pinToRemove);
             }
+        }
+
+        public Position FromScreenLocation(Point point)
+        {
+            if (OnFromScreenLocation == null)
+            {
+                throw new NullReferenceException("OnFromScreenLocation");
+            }
+
+            return OnFromScreenLocation.Invoke(point);
+        }
+
+        public Point ToScreenLocation(Position position)
+        {
+            if (OnToScreenLocation == null)
+            {
+                throw new NullReferenceException("ToScreenLocation");
+            }
+
+            return OnToScreenLocation.Invoke(position);
         }
     }
 }
