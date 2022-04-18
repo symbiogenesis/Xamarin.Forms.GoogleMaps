@@ -53,6 +53,19 @@ namespace Xamarin.Forms.GoogleMaps
                 ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;
             });
 
+        public static readonly BindableProperty NewCameraUpdateProperty = BindableProperty.Create(
+            nameof(NewCameraUpdate), typeof(CameraUpdate), typeof(Map),
+            null,
+            propertyChanged: (bindable, oldValue, newValue) =>
+            {
+                var cameraUpdate = newValue as CameraUpdate;
+
+                if (bindable != null && cameraUpdate != null)
+                {
+                    ((Map)bindable).MoveCamera(cameraUpdate);
+                }
+            });
+
         public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Map), default(Thickness));
 
         public static readonly BindableProperty PinItemsProperty = BindableProperty.Create(nameof(PinItems), typeof(IEnumerable<Pin>), typeof(Map), default(IEnumerable<Pin>),
@@ -214,6 +227,13 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (CameraUpdate)GetValue(InitialCameraUpdateProperty); }
             set { SetValue(InitialCameraUpdateProperty, value); }
+        }
+
+        [TypeConverter(typeof(CameraUpdateConverter))]
+        public CameraUpdate NewCameraUpdate
+        {
+            get { return (CameraUpdate)GetValue(NewCameraUpdateProperty); }
+            set { SetValue(NewCameraUpdateProperty, value); }
         }
 
         public CameraPosition CameraPosition
