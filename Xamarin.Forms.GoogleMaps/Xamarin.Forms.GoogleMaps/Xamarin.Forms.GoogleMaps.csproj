@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard1.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Authors>amay077</Authors>
     <Product>Xamarin.Forms.GoogleMaps</Product>
     <FileVersion>3.0.1.0</FileVersion>
@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
-    <None Include="logo.png" Pack="true" PackagePath="\"/>    
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <None Include="logo.png" Pack="true" PackagePath="\" />    
   </ItemGroup>
 </Project>
