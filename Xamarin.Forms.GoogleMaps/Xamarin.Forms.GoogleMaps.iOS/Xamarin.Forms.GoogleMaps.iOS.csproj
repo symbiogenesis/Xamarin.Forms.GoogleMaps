@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.props" Condition="Exists('..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.props')" />
   <Import Project="..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.props" Condition="Exists('..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.props')" />
-  <Import Project="..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.props" Condition="Exists('..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.props')" />
   <Import Project="$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.props" Condition="Exists('$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,9 +48,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Google.Maps, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Google.iOS.Maps.3.9.0\lib\xamarinios10\Google.Maps.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Google.iOS.Maps.6.0.1.1\lib\xamarinios10\Google.Maps.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -146,17 +148,17 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.props'))" />
     <Error Condition="!Exists('$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.3.9.0\build\Xamarin.Google.iOS.Maps.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.3.5.0\build\Xamarin.Google.iOS.Maps.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.props'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.Google.iOS.Maps.3.9.0\build\Xamarin.Google.iOS.Maps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Google.iOS.Maps.3.9.0\build\Xamarin.Google.iOS.Maps.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.6.0.1.1\build\Xamarin.Google.iOS.Maps.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.3.5.0\build\Xamarin.Google.iOS.Maps.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.props'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.props'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Google.iOS.Maps.6.0.1.1\build\Xamarin.Google.iOS.Maps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Google.iOS.Maps.6.0.1.1\build\Xamarin.Google.iOS.Maps.targets'))" />
   </Target>
   <Import Project="$(SolutionDir)\packages\Xamarin.Forms.3.0.0.482510\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Forms.3.0.0.482510\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Import Project="$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets')" />
-  <Import Project="$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.3.9.0\build\Xamarin.Google.iOS.Maps.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.3.5.0\build\Xamarin.Google.iOS.Maps.targets')" />
-  <Import Project="..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.10.0\build\Xamarin.Build.Download.targets')" />
-  <Import Project="..\packages\Xamarin.Google.iOS.Maps.3.9.0\build\Xamarin.Google.iOS.Maps.targets" Condition="Exists('..\packages\Xamarin.Google.iOS.Maps.3.9.0\build\Xamarin.Google.iOS.Maps.targets')" />
+  <Import Project="$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.6.0.1.1\build\Xamarin.Google.iOS.Maps.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.3.5.0\build\Xamarin.Google.iOS.Maps.targets')" />
   <Import Project="..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.5.0.0.2401\build\Xamarin.Forms.targets')" />
+  <Import Project="..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.11.0\build\Xamarin.Build.Download.targets')" />
+  <Import Project="..\packages\Xamarin.Google.iOS.Maps.6.0.1.1\build\Xamarin.Google.iOS.Maps.targets" Condition="Exists('..\packages\Xamarin.Google.iOS.Maps.6.0.1.1\build\Xamarin.Google.iOS.Maps.targets')" />
 </Project>
