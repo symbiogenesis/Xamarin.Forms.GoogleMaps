@@ -412,8 +412,8 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 _userPositionCircle = new Ellipse
                 {
-                    Stroke = new SolidColorBrush(Colors.White),
-                    Fill = new SolidColorBrush(Colors.Blue),
+                    Stroke = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.White),
+                    Fill = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.Blue),
                     StrokeThickness = 2,
                     Height = 20,
                     Width = 20,

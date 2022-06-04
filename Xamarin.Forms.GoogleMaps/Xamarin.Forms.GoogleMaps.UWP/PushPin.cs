@@ -61,12 +61,12 @@ namespace Xamarin.Forms.Maps.WinRT
                 Height = 70,
                 Opacity = 0.7,
                 Padding = new Windows.UI.Xaml.Thickness(5),
-                Background = new SolidColorBrush(Colors.White)
+                Background = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.White)
             };
             PinLabel = new TextBlock()
             {
                 Text = pin.Label,
-                Foreground = new SolidColorBrush(Colors.Black),
+                Foreground = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.Black),
                 FontWeight = FontWeights.Bold,
                 TextWrapping = TextWrapping.WrapWholeWords,
                 HorizontalAlignment = HorizontalAlignment.Center
@@ -75,7 +75,7 @@ namespace Xamarin.Forms.Maps.WinRT
             Address = new TextBlock()
             {
                 Text = pin.Address ?? string.Empty,
-                Foreground = new SolidColorBrush(Colors.Black),
+                Foreground = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.Black),
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
@@ -105,8 +105,7 @@ namespace Xamarin.Forms.Maps.WinRT
                     if (pin.Icon != null && pin.Icon.Color != Color.Black)
                     {
                         var converter = new ColorConverter();
-                        var colour =
-                        path.Fill = (SolidColorBrush)converter.Convert(pin.Icon.Color, null, null, null); ;
+                        path.Fill = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(pin.Icon.Color, null, null, null);
                     }
                     if (Icon != null)
                     {
