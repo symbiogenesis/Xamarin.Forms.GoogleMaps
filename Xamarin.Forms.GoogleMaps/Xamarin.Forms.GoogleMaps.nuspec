@@ -85,7 +85,7 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 		<authors>symbiogenesis</authors>
 		<copyright>Copyright 2022</copyright>
 		<license type="file">LICENSE.txt</license>
-    <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
+    <projectUrl>https://github.com/symbiogenesis/Xamarin.Forms.GoogleMaps</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Yet another Maps library for Xamarin.Forms that optimized for Google maps.</description>
 		<summary>Yet another Maps library for Xamarin.Forms that optimized for Google maps</summary>
