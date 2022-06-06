@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls.Maps;
+﻿using Windows.UI.Xaml.Controls.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 {
@@ -19,7 +14,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         protected override void OnUpdateRotateGesturesEnabled()
         {
-            NativeMap.RotateInteractionMode = Map.HasRotationEnabled ? 
+            NativeMap.RotateInteractionMode = Map.HasRotationEnabled ?
                 MapInteractionMode.Auto : MapInteractionMode.Disabled;
 
             if (Map.HasRotationEnabled != Map.UiSettings.RotateGesturesEnabled)

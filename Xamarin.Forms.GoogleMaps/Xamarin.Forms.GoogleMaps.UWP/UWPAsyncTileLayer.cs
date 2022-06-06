@@ -43,7 +43,7 @@ namespace Xamarin.Forms.GoogleMaps.UWP
                 }
                 deferral.Complete();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 deferral.Complete();
             }

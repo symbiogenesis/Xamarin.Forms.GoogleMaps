@@ -27,8 +27,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 return null;
             }
-
         }
     }
 }
-

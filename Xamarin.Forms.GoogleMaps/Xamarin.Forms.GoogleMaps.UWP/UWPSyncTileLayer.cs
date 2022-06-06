@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls.Maps;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Xamarin.Forms.GoogleMaps.UWP
 {
@@ -15,13 +10,13 @@ namespace Xamarin.Forms.GoogleMaps.UWP
     {
         private readonly Func<int, int, int, byte[]> _makeTileUri;
 
-        public UWPSyncTileLayer(Func<int, int, int, byte[]> makeTileUri, int tileSize = 256)
+        public UWPSyncTileLayer(Func<int, int, int, byte[]> makeTileUri)
         {
             _makeTileUri = makeTileUri;
             this.BitmapRequested += UWPSyncTileLayer_BitmapRequested;
         }
 
-        private async void UWPSyncTileLayer_BitmapRequested(CustomMapTileDataSource sender, MapTileBitmapRequestedEventArgs args)
+        private void UWPSyncTileLayer_BitmapRequested(CustomMapTileDataSource sender, MapTileBitmapRequestedEventArgs args)
         {
             var deferral = args.Request.GetDeferral();
 
@@ -31,7 +26,6 @@ namespace Xamarin.Forms.GoogleMaps.UWP
                 {
                     try
                     {
-
                         var data = _makeTileUri(args.X, args.Y, args.ZoomLevel);
 
                         if (data != null)
@@ -55,7 +49,7 @@ namespace Xamarin.Forms.GoogleMaps.UWP
                         }
                         deferral.Complete();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         deferral.Complete();
                     }

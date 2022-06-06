@@ -14,7 +14,7 @@ using System.Collections.Concurrent;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-    class Utils
+    static class Utils
     {
         /// <summary>
         /// convert from dp to pixels
@@ -65,13 +65,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return b;
         }
 
-        private static LinkedList<string> lruTracker = new LinkedList<string>();
-        private static ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor> cache = new ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor>();
+        private static readonly LinkedList<string> lruTracker = new LinkedList<string>();
+        private static readonly ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor> cache = new ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor>();
 
         public static Task<global::Android.Gms.Maps.Model.BitmapDescriptor> ConvertViewToBitmapDescriptor(global::Android.Views.View v)
         {
             return Task.Run(() => {
-
                 var bmp = ConvertViewToBitmap(v);
                 var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
 
@@ -100,8 +99,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     }
                     if (lruTracker.Count > 10) // O(1)
                     {
-                        global::Android.Gms.Maps.Model.BitmapDescriptor tmp;
-                        cache.TryRemove(lruTracker.First.Value, out tmp);
+                        cache.TryRemove(lruTracker.First.Value, out global::Android.Gms.Maps.Model.BitmapDescriptor tmp);
                         lruTracker.RemoveFirst();
                     }
                     lruTracker.AddLast(hash);
@@ -113,13 +111,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static global::Android.Widget.FrameLayout AddViewOnFrameLayout(global::Android.Views.View view, int width, int height)
         {
-            var layout = new global::Android.Widget.FrameLayout(view.Context);
-            layout.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+            var layout = new global::Android.Widget.FrameLayout(view.Context)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent)
+            };
             view.LayoutParameters = new global::Android.Widget.FrameLayout.LayoutParams(width, height);
             layout.AddView(view);
             return layout;
         }
-
     }
 }
-
