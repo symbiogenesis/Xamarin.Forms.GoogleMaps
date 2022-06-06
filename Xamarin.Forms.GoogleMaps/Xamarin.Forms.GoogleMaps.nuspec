@@ -92,14 +92,14 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps xamarinformsgooglemaps xamarin.forms.googlemaps google googlemap</tags>
 	<dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="3.0.0.482510" />
+        <dependency id="Xamarin.Forms" version="5.0.0.2401" />
       </group>
       <group targetFramework="MonoAndroid80">
-        <dependency id="Xamarin.GooglePlayServices.Maps" version="60.1142.1"/>
-        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="25.1.0"/>
+        <dependency id="Xamarin.GooglePlayServices.Maps" version="118.0.2"/>
+        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="28.0.0.3"/>
       </group>
       <group targetFramework="Xamarin.iOS10">
-        <dependency id="Xamarin.Google.iOS.Maps" version="3.5.0"/>
+        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1.1"/>
       </group>
 	</dependencies>
 	</metadata>
