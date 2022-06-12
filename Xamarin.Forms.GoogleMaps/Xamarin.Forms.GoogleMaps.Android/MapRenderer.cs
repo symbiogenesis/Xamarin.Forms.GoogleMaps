@@ -5,10 +5,8 @@ using System.IO;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.OS;
-using Java.Lang;
 using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
-using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Xamarin.Forms.GoogleMaps.Logics.Android;
@@ -18,7 +16,6 @@ using Android.Widget;
 using Android.Views;
 using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.GoogleMaps.Internals;
-using Android.Util;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -35,6 +32,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
         public MapRenderer(Context context) : base(context)
         {
             _cameraLogic = new CameraLogic(UpdateVisibleRegion);
+
+            Config ??= new PlatformConfig();
 
             AutoPackage = false;
             Logics = new List<BaseLogic<GoogleMap>>

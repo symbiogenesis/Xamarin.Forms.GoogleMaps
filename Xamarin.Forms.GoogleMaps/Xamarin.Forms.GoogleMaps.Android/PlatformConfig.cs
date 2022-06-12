@@ -4,6 +4,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
 {
     public sealed class PlatformConfig
     {
-        public IBitmapDescriptorFactory BitmapDescriptorFactory { get; set; }
+        public IBitmapDescriptorFactory BitmapDescriptorFactory { get; set; } = DefaultBitmapDescriptorFactory.Instance;
     }
 }
