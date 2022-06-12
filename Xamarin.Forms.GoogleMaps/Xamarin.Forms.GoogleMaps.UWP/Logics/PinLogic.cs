@@ -118,8 +118,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         private void Pushpin_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            //Select pin
             var pin = (sender as PushPin);
+            var targetPin = LookupPin(pin);
+            
+            // If set to PinClickedEventArgs.Handled = true in app codes,
+            // then all pin selection controlling by app.
+            if (Map.SendPinClicked(targetPin))
+            {
+                return;
+            }
+            
+            //Select pin
             if (Map.SelectedPin != null)
             {
                 foreach (var outerItem in GetItems(Map))
@@ -130,17 +139,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                     }
                 }
             }
-
-            var targetPin = LookupPin(pin);
-
             pin.DetailsView.Visibility = ReferenceEquals(targetPin, Map.SelectedPin) ? Windows.UI.Xaml.Visibility.Collapsed : Windows.UI.Xaml.Visibility.Visible;
-
-            // If set to PinClickedEventArgs.Handled = true in app codes,
-            // then all pin selection controlling by app.
-            if (Map.SendPinClicked(targetPin))
-            {
-                return;
-            }
 
             if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
             {
