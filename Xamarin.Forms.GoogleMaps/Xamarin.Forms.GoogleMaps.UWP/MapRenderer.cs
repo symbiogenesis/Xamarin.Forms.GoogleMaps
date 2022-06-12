@@ -5,14 +5,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
-using Windows.UI;
 using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
-using Xamarin.Forms.GoogleMaps.Extensions.UWP;
+
+
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Logics.UWP;
+using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 using Xamarin.Forms.GoogleMaps.UWP.Logics;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Maps.WinRT
     public class MapRenderer : ViewRenderer<Map, MapControl>
     {
         private readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
-        private readonly CameraLogic _cameraLogic = new CameraLogic();
+        private readonly CameraLogic _cameraLogic ;
 
         private Map Map
         {
@@ -57,6 +57,8 @@ namespace Xamarin.Forms.Maps.WinRT
                 new CircleLogic(),
                 new TileLayerLogic(),
             };
+
+            _cameraLogic = new CameraLogic();
         }
 
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
@@ -103,7 +105,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasZoomEnabled();
                 UpdateHasRotationEnabled();
 
-                await UpdateIsShowingUser(Element.IsShowingUser);
+                await UpdateIsShowingUser(Element.MyLocationEnabled);
 
                 foreach (var logic in _logics)
                 {
@@ -164,7 +166,7 @@ namespace Xamarin.Forms.Maps.WinRT
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
                 UpdateMapType();
             else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-                await UpdateIsShowingUser(Element.IsShowingUser);
+                await UpdateIsShowingUser(Element.MyLocationEnabled);
             else if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
                 await UpdateIsShowingUser(Element.MyLocationEnabled);
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
@@ -247,10 +249,17 @@ namespace Xamarin.Forms.Maps.WinRT
                 var boundingBox = GetBounds(this.Control);
                 if (boundingBox != null)
                 {
+                    //Hack 1 
+                    //Begin
                     var center = new Position(boundingBox.Center.Latitude, boundingBox.Center.Longitude);
                     var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
                     var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
                     Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
+                    //End
+
+                    //Could it replace Hack 1?
+                    //Element.Region = new MapRegion(new Position(boundingBox.NorthwestCorner.Latitude, boundingBox.SoutheastCorner.Longitude), boundingBox.SoutheastCorner.ToPosition(), boundingBox.NorthwestCorner.ToPosition(), new Position(boundingBox.SoutheastCorner.Latitude, boundingBox.NorthwestCorner.Longitude));
+
                     // Simone Marra
                     UpdateCornersBounds(this.Control);
                     // End Simone Marra
@@ -406,8 +415,8 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 _userPositionCircle = new Ellipse
                 {
-                    Stroke = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.White),
-                    Fill = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.Blue),
+                    Stroke = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.White),
+                    Fill = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Blue),
                     StrokeThickness = 2,
                     Height = 20,
                     Width = 20,
@@ -465,6 +474,8 @@ namespace Xamarin.Forms.Maps.WinRT
             }
         }
 
+
+
 #if WINDOWS_UWP
         void UpdateHasZoomEnabled()
         {
@@ -475,12 +486,12 @@ namespace Xamarin.Forms.Maps.WinRT
 
         void UpdateHasScrollEnabled()
         {
-            Control.PanInteractionMode = Element.HasScrollEnabled ? MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
+            Control.PanInteractionMode = Element.UiSettings.ScrollGesturesEnabled ? MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
         }
 
         void UpdateHasRotationEnabled()
         {
-            Map.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
+            Map.UiSettings.RotateGesturesEnabled = Map.UiSettings.RotateGesturesEnabled;
         }
 #else
         void UpdateHasZoomEnabled()

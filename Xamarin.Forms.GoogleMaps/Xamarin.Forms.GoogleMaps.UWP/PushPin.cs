@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+
 using Windows.Devices.Geolocation;
 using Windows.UI;
 using Windows.UI.Text;
@@ -7,9 +7,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
-using Xamarin.Forms.GoogleMaps.Extensions.UWP;
+
+using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 using Xamarin.Forms.Platform.UWP;
 
 #if WINDOWS_UWP
@@ -99,8 +99,7 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 var template = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
                 var content = template.LoadContent();
-                var path = content as Path;
-                if (path != null)
+                if (content is Path path)
                 {
                     if (pin.Icon != null && pin.Icon.Color != Color.Black)
                     {

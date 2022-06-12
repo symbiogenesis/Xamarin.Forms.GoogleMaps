@@ -13,6 +13,19 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
 {
     internal sealed class CameraLogic : BaseCameraLogic<MapControl>
     {
+
+        public override void Register(Map map, MapControl nativeMapControl)
+        {
+            base.Register(map, nativeMapControl);
+            _nativeMap.ActualCameraChanged += NativeMap_ActualCameraChanged; 
+        }
+
+        public override void Unregister()
+        {
+            _nativeMap.ActualCameraChanged -= NativeMap_ActualCameraChanged;
+            base.Unregister();
+        }
+
         public async override void OnMoveToRegionRequest(MoveToRegionMessage m)
         {
             MapSpan span = m.Span;
@@ -107,6 +120,12 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
             {
                 m.Callback.OnCanceled();
             }
+        }
+
+        // TODO WORKARROUND for Xamarin.Forms.GoogleMaps's event CameraIdled doesn't work
+        private void NativeMap_ActualCameraChanged(MapControl sender, MapActualCameraChangedEventArgs args)
+        {
+            _map?.SendCameraIdled(new CameraPosition(args.Camera.Location.Position.ToPosition(), sender.ZoomLevel));
         }
     }
 }
