@@ -162,5 +162,3 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         }
     }
 }
-
-
