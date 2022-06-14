@@ -19,9 +19,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         private readonly Context _context;
         private readonly IBitmapDescriptorFactory _bitmapDescriptorFactory;
 
-        public GroundOverlayLogic(
-            Context context, 
-            IBitmapDescriptorFactory bitmapDescriptorFactory)
+        public GroundOverlayLogic(Context context, IBitmapDescriptorFactory bitmapDescriptorFactory)
         {
             _context = context;
             _bitmapDescriptorFactory = bitmapDescriptorFactory;
@@ -80,8 +78,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override NativeGroundOverlay DeleteNativeItem(GroundOverlay outerItem)
         {
-            var nativeOverlay = outerItem.NativeObject as NativeGroundOverlay;
-            if (nativeOverlay == null)
+            if (!(outerItem.NativeObject is NativeGroundOverlay nativeOverlay))
                 return null;
             nativeOverlay.Remove();
             outerItem.NativeObject = null;
@@ -110,12 +107,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         internal override void OnUpdateBounds(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
-            nativeItem.SetPositionFromBounds(outerItem.Bounds.ToLatLngBounds()); 
+            nativeItem.SetPositionFromBounds(outerItem.Bounds.ToLatLngBounds());
         }
 
         internal override void OnUpdateIcon(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
-            if (outerItem.Icon != null && outerItem.Icon.Type == BitmapDescriptorType.View)
+            if (outerItem.Icon?.Type == BitmapDescriptorType.View)
             {
                 // If the pin has an IconView set this method will convert it into an icon for the marker
                 TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);
