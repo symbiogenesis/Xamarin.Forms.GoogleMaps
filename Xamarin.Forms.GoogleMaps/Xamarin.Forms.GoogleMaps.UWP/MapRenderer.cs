@@ -249,14 +249,18 @@ namespace Xamarin.Forms.Maps.WinRT
                 {
                     //Hack 1 
                     //Begin
-                    var center = new Position(boundingBox.Center.Latitude, boundingBox.Center.Longitude);
-                    var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
-                    var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
-                    Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
+                    //var center = new Position(boundingBox.Center.Latitude, boundingBox.Center.Longitude);
+                    //var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
+                    //var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
+                    //Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
                     //End
 
                     //Could it replace Hack 1?
-                    //Element.Region = new MapRegion(new Position(boundingBox.NorthwestCorner.Latitude, boundingBox.SoutheastCorner.Longitude), boundingBox.SoutheastCorner.ToPosition(), boundingBox.NorthwestCorner.ToPosition(), new Position(boundingBox.SoutheastCorner.Latitude, boundingBox.NorthwestCorner.Longitude));
+                    var nearLeft = new Position(boundingBox.NorthwestCorner.Latitude, boundingBox.SoutheastCorner.Longitude);
+                    var nearRight = boundingBox.SoutheastCorner.ToPosition();
+                    var farLeft = boundingBox.NorthwestCorner.ToPosition();
+                    var farRight = new Position(boundingBox.SoutheastCorner.Latitude, boundingBox.NorthwestCorner.Longitude);
+                    Element.Region = new MapRegion(nearLeft, nearRight, farLeft, farRight);
 
                     // Simone Marra
                     UpdateCornersBounds(this.Control);
