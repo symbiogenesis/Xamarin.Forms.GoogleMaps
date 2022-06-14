@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Shapes;
-
-
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Logics.UWP;
@@ -474,12 +472,10 @@ namespace Xamarin.Forms.Maps.WinRT
             }
         }
 
-
-
 #if WINDOWS_UWP
         void UpdateHasZoomEnabled()
         {
-            Control.ZoomInteractionMode = Element.HasZoomEnabled
+            Control.ZoomInteractionMode = Map.UiSettings.ZoomControlsEnabled
                 ? MapInteractionMode.GestureAndControl
                 : MapInteractionMode.Disabled;
         }
