@@ -33,15 +33,9 @@ namespace Xamarin.Forms.Maps.WinRT
         private readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         private readonly CameraLogic _cameraLogic ;
 
-        private Map Map
-        {
-            get { return Element as Map; }
-        }
+        private Map Map => Element;
 
-        private MapControl NativeMap
-        {
-            get { return Control as MapControl; }
-        }
+        private MapControl NativeMap => Control;
 
         readonly BaseLogic<MapControl>[] _logics;
 
@@ -63,7 +57,7 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             base.OnElementChanged(e);
 
-            var oldMapView = (MapControl)Control;
+            var oldMapView = Control;
 
             if (e.OldElement != null)
             {
@@ -195,7 +189,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 foreach (var logic in _logics)
                     logic.Unregister(NativeMap, Map);
 
-                var oldMapView = (MapControl)Control;
+                var oldMapView = Control;
                 if (oldMapView != null)
                 {
                     oldMapView.ActualCameraChanged -= OnActualCameraChanged;
