@@ -36,17 +36,17 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return px / metrics.Density;
         }
 
-        public static Task<ViewGroup> ConvertFormsToNative(View view, Rectangle size, IVisualElementRenderer vRenderer)
+        public static Task<global::Android.Views.View> ConvertFormsToNative(View view, Rectangle size, IVisualElementRenderer vRenderer)
         {
             return Task.Run(() => {
-                var viewGroup = vRenderer.ViewGroup;
+                var nativeView = vRenderer.View;
                 vRenderer.Tracker.UpdateLayout();
                 var layoutParams = new ViewGroup.LayoutParams((int)size.Width, (int)size.Height);
-                viewGroup.LayoutParameters = layoutParams;
+                nativeView.LayoutParameters = layoutParams;
                 view.Layout(size);
-                viewGroup.Layout(0, 0, (int)view.WidthRequest, (int)view.HeightRequest);
+                nativeView.Layout(0, 0, (int)view.Width, (int)view.Height);
                 //await FixImageSourceOfImageViews(viewGroup as ViewGroup); // Not sure why this was being done in original
-                return viewGroup;
+                return nativeView;
             });
         }
 
