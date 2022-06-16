@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
 using Xamarin.Forms.GoogleMaps.Internals;
@@ -13,11 +9,10 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
 {
     internal sealed class CameraLogic : BaseCameraLogic<MapControl>
     {
-
         public override void Register(Map map, MapControl nativeMapControl)
         {
             base.Register(map, nativeMapControl);
-            _nativeMap.ActualCameraChanged += NativeMap_ActualCameraChanged; 
+            _nativeMap.ActualCameraChanged += NativeMap_ActualCameraChanged;
         }
 
         public override void Unregister()
@@ -33,18 +28,18 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
 
             var nw = new BasicGeoposition
             {
-                Latitude = span.Center.Latitude + span.LatitudeDegrees / 2,
-                Longitude = span.Center.Longitude - span.LongitudeDegrees / 2
+                Latitude = span.Center.Latitude + (span.LatitudeDegrees / 2),
+                Longitude = span.Center.Longitude - (span.LongitudeDegrees / 2)
             };
             var se = new BasicGeoposition
             {
-                Latitude = span.Center.Latitude - span.LatitudeDegrees / 2,
-                Longitude = span.Center.Longitude + span.LongitudeDegrees / 2
+                Latitude = span.Center.Latitude - (span.LatitudeDegrees / 2),
+                Longitude = span.Center.Longitude + (span.LongitudeDegrees / 2)
             };
             var boundingBox = new GeoboundingBox(nw, se);
             await _nativeMap.TrySetViewBoundsAsync(boundingBox, null, animation);
         }
-        
+
         public override void OnMoveCameraRequest(CameraUpdateMessage m)
         {
             MoveCamera(m.Update);
