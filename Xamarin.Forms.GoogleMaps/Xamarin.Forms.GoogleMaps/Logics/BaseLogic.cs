@@ -36,18 +36,18 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             }
         }
 
-        protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            switch (notifyCollectionChangedEventArgs.Action)
+            switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    AddItems(notifyCollectionChangedEventArgs.NewItems);
+                    AddItems(args.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    RemoveItems(notifyCollectionChangedEventArgs.OldItems);
+                    RemoveItems(args.OldItems);
                     break;
                 case NotifyCollectionChangedAction.Replace:
-                    ReplaceItems(notifyCollectionChangedEventArgs.OldItems, notifyCollectionChangedEventArgs.NewItems);
+                    ReplaceItems(args.OldItems, args.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     ResetItems();
