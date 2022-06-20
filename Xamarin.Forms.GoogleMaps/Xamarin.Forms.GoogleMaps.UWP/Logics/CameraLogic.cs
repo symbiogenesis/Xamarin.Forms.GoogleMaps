@@ -48,7 +48,7 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
 
         internal async void MoveCamera(CameraUpdate update)
         {
-            switch (update.UpdateType)
+            switch (update?.UpdateType)
             {
                 case CameraUpdateType.LatLng:
                     _nativeMap.Center = update.Position.ToGeopoint();
