@@ -592,14 +592,14 @@ namespace Xamarin.Forms.GoogleMaps
 
         private void OnPinItemsPropertyChanged(IEnumerable<Pin> oldItemsSource, IEnumerable<Pin> newItemsSource)
         {
-            if (oldItemsSource is INotifyCollectionChanged ncc)
+            if (oldItemsSource is INotifyCollectionChanged oldNcc)
             {
-                ncc.CollectionChanged -= OnPinItemsCollectionChanged;
+                oldNcc.CollectionChanged -= OnPinItemsCollectionChanged;
             }
 
-            if (newItemsSource is INotifyCollectionChanged ncc1)
+            if (newItemsSource is INotifyCollectionChanged newNcc)
             {
-                ncc1.CollectionChanged += OnPinItemsCollectionChanged;
+                newNcc.CollectionChanged += OnPinItemsCollectionChanged;
             }
 
             _pins.Clear();
