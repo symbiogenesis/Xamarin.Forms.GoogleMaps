@@ -147,7 +147,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 var iconView = outerItem.Icon.View;
                 var nativeView = await Utils.ConvertFormsToNative(
                     iconView,
-                    new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)),
+                    new Rectangle(0, 0, Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest)),
                     Platform.Android.Platform.CreateRendererWithContext(iconView, _context));
                 var otherView = new FrameLayout(nativeView.Context);
                 nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
