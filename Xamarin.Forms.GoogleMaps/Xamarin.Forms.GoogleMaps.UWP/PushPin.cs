@@ -132,7 +132,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 }
                 else
                 {
-                    TransformXamarinViewToUWPBitmap(pin, this);
+                    TransformXamarinViewToUWPBitmap(pin);
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace Xamarin.Forms.Maps.WinRT
             MapControl.SetNormalizedAnchorPoint(this, anchor);
         }
 
-        private void TransformXamarinViewToUWPBitmap(Pin outerItem, ContentControl nativeItem)
+        private void TransformXamarinViewToUWPBitmap(Pin outerItem)
         {
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
             {
