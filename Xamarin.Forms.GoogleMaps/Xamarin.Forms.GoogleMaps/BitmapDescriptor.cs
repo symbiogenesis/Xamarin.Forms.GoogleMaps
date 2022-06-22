@@ -4,8 +4,8 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class BitmapDescriptor
     {
-        public string Id { get; private set; }      
-        public BitmapDescriptorType Type { get; private set; }      
+        public string Id { get; private set; }
+        public BitmapDescriptorType Type { get; private set; }
         public Color Color { get; private set; }
         public string BundleName { get; private set; }
         public Stream Stream { get; private set; }
@@ -67,4 +67,3 @@ namespace Xamarin.Forms.GoogleMaps
         }
     }
 }
-
