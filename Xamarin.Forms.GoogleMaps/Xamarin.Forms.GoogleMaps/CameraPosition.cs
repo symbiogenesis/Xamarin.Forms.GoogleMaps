@@ -1,7 +1,3 @@
-using System;
-
-using Xamarin.Forms;
-
 namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class CameraPosition
@@ -32,5 +28,4 @@ namespace Xamarin.Forms.GoogleMaps
             Zoom = zoom;
         }
     }
-
 }
