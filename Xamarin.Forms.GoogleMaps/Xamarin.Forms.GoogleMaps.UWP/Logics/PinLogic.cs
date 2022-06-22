@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
-using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 using Xamarin.Forms.GoogleMaps.UWP;
+using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 {
@@ -38,7 +35,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                 }
             }
         }
-        
+
         internal override void OnMapPropertyChanged(PropertyChangedEventArgs e)
         {
             if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
@@ -48,18 +45,18 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                 {
                     foreach (var outerItem in GetItems(Map).Where(x => !ReferenceEquals(x,pin)))
                     {
-                        if ((outerItem.NativeObject as PushPin).DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
+                        var outerPushPin = outerItem.NativeObject as PushPin;
+                        if (outerPushPin.DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
                         {
-                            (outerItem.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                            outerPushPin.DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                         }
                     }
 
-
-                    var pushPin = (pin.NativeObject as PushPin);
+                    var pushPin = pin.NativeObject as PushPin;
                     if (pushPin.DetailsView.Visibility != Windows.UI.Xaml.Visibility.Visible)
                     {
                         pushPin.DetailsView.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                    }             
+                    }
                 }
             }
         }
@@ -73,9 +70,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             {
                 foreach (var outerItem in GetItems(Map))
                 {
-                    if ((outerItem.NativeObject as PushPin).DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
+                    var pushPin = outerItem.NativeObject as PushPin;
+                    if (pushPin.DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
                     {
-                        (outerItem.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        pushPin.DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     }
                 }
             }
@@ -111,31 +109,32 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             Map.SendInfoWindowClicked(((Pin)sender));
         }
 
-        private void Pushpin_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        private void Pushpin_Holding(object sender, HoldingRoutedEventArgs e)
         {
             //drag not implemented
         }
 
-        private void Pushpin_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void Pushpin_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var pin = (sender as PushPin);
             var targetPin = LookupPin(pin);
-            
+
             // If set to PinClickedEventArgs.Handled = true in app codes,
             // then all pin selection controlling by app.
             if (Map.SendPinClicked(targetPin))
             {
                 return;
             }
-            
+
             //Select pin
             if (Map.SelectedPin != null)
             {
                 foreach (var outerItem in GetItems(Map))
                 {
-                    if ((outerItem.NativeObject as PushPin).DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
+                    var pushPin = outerItem.NativeObject as PushPin;
+                    if (pushPin.DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
                     {
-                        (outerItem.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        pushPin.DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     }
                 }
             }
