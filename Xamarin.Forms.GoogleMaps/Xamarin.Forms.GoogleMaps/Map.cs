@@ -5,12 +5,10 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using Xamarin.Forms.GoogleMaps.Internals;
-using Xamarin.Forms.GoogleMaps.Helpers;
 using System.Threading.Tasks;
 using Xamarin.Forms.GoogleMaps.Extensions;
-using System.ComponentModel;
-using System.Windows.Input;
+using Xamarin.Forms.GoogleMaps.Helpers;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -428,26 +426,25 @@ namespace Xamarin.Forms.GoogleMaps
 
         private void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null && e.NewItems.Cast<Pin>().Any(pin => pin.Label == null))
+            if (e.NewItems?.Cast<Pin>().Any(pin => pin.Label == null) == true)
                 throw new ArgumentException("Pin must have a Label to be added to a map");
         }
 
         private void PolylinesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null && e.NewItems.Cast<Polyline>().Any(polyline => polyline.Positions.Count < 2))
+            if (e.NewItems?.Cast<Polyline>().Any(polyline => polyline.Positions.Count < 2) == true)
                 throw new ArgumentException("Polyline must have a 2 positions to be added to a map");
         }
 
         private void PolygonsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null && e.NewItems.Cast<Polygon>().Any(polygon => polygon.Positions.Count < 3))
+            if (e.NewItems?.Cast<Polygon>().Any(polygon => polygon.Positions.Count < 3) == true)
                 throw new ArgumentException("Polygon must have a 3 positions to be added to a map");
         }
 
         private void CirclesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null && e.NewItems.Cast<Circle>().Any(circle => (
-                circle?.Center == null || circle?.Radius == null || circle.Radius.Meters <= 0f)))
+            if (e.NewItems?.Cast<Circle>().Any(circle => circle?.Center == null || circle?.Radius == null || circle.Radius.Meters <= 0f) == true)
                 throw new ArgumentException("Circle must have a center and radius");
         }
 
