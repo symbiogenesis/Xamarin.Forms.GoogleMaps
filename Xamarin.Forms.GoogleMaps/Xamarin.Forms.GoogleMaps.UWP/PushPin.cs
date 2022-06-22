@@ -22,7 +22,8 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     internal class PushPin : ContentControl
     {
-        readonly Pin _pin;
+        private readonly Pin _pin;
+        private static Windows.UI.Xaml.DataTemplate _template = null;
 
         public Guid Id { get; set; }
 
@@ -38,6 +39,9 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             if (pin == null)
                 throw new ArgumentNullException();
+
+            if (_template == null)
+                _template = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
 
             SetupDetailsView(pin);
             UpdateIcon(pin);
@@ -97,8 +101,7 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             if (pin.Icon == null || pin.Icon.Type == BitmapDescriptorType.Default)
             {
-                var template = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
-                var content = template.LoadContent();
+                var content = _template.LoadContent();
                 if (content is Path path)
                 {
                     if (pin.Icon != null && pin.Icon.Color != Color.Black)
