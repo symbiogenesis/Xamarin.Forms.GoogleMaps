@@ -10,6 +10,7 @@
     <RootNamespace>Xamarin.Forms.GoogleMaps.UWP</RootNamespace>
     <AssemblyName>Xamarin.Forms.GoogleMaps.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <LangVersion>Latest</LangVersion>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
