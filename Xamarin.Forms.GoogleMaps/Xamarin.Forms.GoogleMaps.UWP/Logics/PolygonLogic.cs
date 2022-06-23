@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
-using Xamarin.Forms.Platform.UWP;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 {
@@ -32,13 +29,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         private void NewNativeMapOnMapElementClick(MapControl sender, MapElementClickEventArgs args)
         {
-            var nativeItem = args.MapElements.FirstOrDefault(e => e is MapPolygon) as MapPolygon;
+            var nativeItem = (MapPolygon) args.MapElements.FirstOrDefault(e => e is MapPolygon);
 
             if (nativeItem != null)
             {
                 var targetOuterItem = GetItems(Map)
                     .FirstOrDefault(outerItem => ((MapPolygon) outerItem.NativeObject) == nativeItem && outerItem.IsClickable);
-                
+
                 targetOuterItem?.SendTap();
             }
         }
@@ -47,11 +44,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         protected override MapPolygon CreateNativeItem(Polygon outerItem)
         {
-            Color color = outerItem.StrokeColor;
-            Color fillcolor = outerItem.FillColor;
-            Geopath geopath = new Geopath(outerItem.Positions.Select(position => new BasicGeoposition { Latitude = position.Latitude, Longitude = position.Longitude }));
+            var color = outerItem.StrokeColor;
+            var fillcolor = outerItem.FillColor;
+            var geopath = new Geopath(outerItem.Positions.Select(position => new BasicGeoposition { Latitude = position.Latitude, Longitude = position.Longitude }));
 
-            MapPolygon nativePolygon = new MapPolygon
+            var nativePolygon = new MapPolygon
             {
                 FillColor = Windows.UI.Color.FromArgb(
                     (byte)(fillcolor.A * 255),
@@ -74,7 +71,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             }
 
             NativeMap.MapElements.Add(nativePolygon);
-            
+
             outerItem.NativeObject = nativePolygon;
 
             return nativePolygon;
@@ -82,18 +79,15 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         protected override MapPolygon DeleteNativeItem(Polygon outerItem)
         {
-            var polygon = outerItem.NativeObject as MapPolygon;
-
-            if (polygon == null)
+            if (outerItem.NativeObject is MapPolygon polygon)
             {
-                return null;
+                NativeMap.MapElements.Remove(polygon);
+
+                outerItem.NativeObject = null;
+
+                return polygon;
             }
-
-            NativeMap.MapElements.Remove(polygon);
-
-            outerItem.NativeObject = null;
-
-            return polygon;
+            return null;
         }
 
         internal override void OnUpdateIsClickable(Polygon outerItem, MapPolygon nativeItem)
@@ -131,6 +125,5 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
         {
             nativeItem.ZIndex = outerItem.ZIndex;
         }
-
     }
 }
