@@ -7,19 +7,14 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class Polyline : BindableObject
     {
-        void HandleAction(GoogleMaps.Polygon arg1, NotifyCollectionChangedEventArgs arg2)
-        {
-
-        }
-
         public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(nameof(StrokeWidth), typeof(float), typeof(Polyline), 1f);
         public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(Polyline), Color.Blue);
         public static readonly BindableProperty IsClickableProperty = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(Polyline), false);
         public static readonly BindableProperty ZIndexProperty = BindableProperty.Create(nameof(ZIndex), typeof(int), typeof(Polyline), 0);
 
-        private readonly ObservableCollection<Position> _positions = new ObservableCollection<Position>();
+        private readonly ObservableCollection<Position> _positions = new();
 
-        private Action<Polyline, NotifyCollectionChangedEventArgs> _positionsChangedHandler = null;
+        private Action<Polyline, NotifyCollectionChangedEventArgs> _positionsChangedHandler;
 
         public float StrokeWidth
         {
@@ -56,10 +51,6 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler Clicked;
 
-        public Polyline()
-        {
-        }
-
         internal bool SendTap()
         {
             EventHandler handler = Clicked;
@@ -85,4 +76,3 @@ namespace Xamarin.Forms.GoogleMaps
         }
     }
 }
-

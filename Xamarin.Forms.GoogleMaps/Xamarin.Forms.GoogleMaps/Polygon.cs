@@ -13,11 +13,11 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty IsClickableProperty = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(Polygon), false);
         public static readonly BindableProperty ZIndexProperty = BindableProperty.Create(nameof(ZIndex), typeof(int), typeof(Polygon), 0);
 
-        private readonly ObservableCollection<Position> _positions = new ObservableCollection<Position>();
-        private readonly ObservableCollection<Position[]> _holes = new ObservableCollection<Position[]>();
+        private readonly ObservableCollection<Position> _positions = new();
+        private readonly ObservableCollection<Position[]> _holes = new();
 
-        private Action<Polygon, NotifyCollectionChangedEventArgs> _positionsChangedHandler = null;
-        private Action<Polygon, NotifyCollectionChangedEventArgs> _holesChangedHandler = null;
+        private Action<Polygon, NotifyCollectionChangedEventArgs> _positionsChangedHandler;
+        private Action<Polygon, NotifyCollectionChangedEventArgs> _holesChangedHandler;
 
         public float StrokeWidth
         {
@@ -35,7 +35,6 @@ namespace Xamarin.Forms.GoogleMaps
             get { return (Color)GetValue(FillColorProperty); }
             set { SetValue(FillColorProperty, value); }
         }
-
 
         public bool IsClickable
         {
@@ -64,10 +63,6 @@ namespace Xamarin.Forms.GoogleMaps
         public object NativeObject { get; internal set; }
 
         public event EventHandler Clicked;
-
-        public Polygon()
-        {
-        }
 
         internal bool SendTap()
         {
@@ -116,4 +111,3 @@ namespace Xamarin.Forms.GoogleMaps
         }
     }
 }
-
