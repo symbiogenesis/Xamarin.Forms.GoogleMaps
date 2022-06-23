@@ -16,6 +16,11 @@ namespace Xamarin.Forms.GoogleMaps.UWP
             this.BitmapRequested += UWPSyncTileLayer_BitmapRequested;
         }
 
+        ~UWPSyncTileLayer()
+        {
+            this.BitmapRequested -= UWPSyncTileLayer_BitmapRequested;
+        }
+
         private void UWPSyncTileLayer_BitmapRequested(CustomMapTileDataSource sender, MapTileBitmapRequestedEventArgs args)
         {
             var deferral = args.Request.GetDeferral();
@@ -30,18 +35,19 @@ namespace Xamarin.Forms.GoogleMaps.UWP
 
                         if (data != null)
                         {
-                            MemoryStream stream = new MemoryStream();
+                            using MemoryStream stream = new();
                             stream.Write(data, 0, data.Length);
                             stream.Flush();
                             stream.Position = 0;
 
-                            var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(stream.AsRandomAccessStream()).AsTask().ConfigureAwait(false);
+                            using var randomAccessInputStream = stream.AsRandomAccessStream();
+                            var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(randomAccessInputStream).AsTask().ConfigureAwait(false);
                             var pixelProvider = await decoder.GetPixelDataAsync(Windows.Graphics.Imaging.BitmapPixelFormat.Rgba8, Windows.Graphics.Imaging.BitmapAlphaMode.Straight, new Windows.Graphics.Imaging.BitmapTransform(), Windows.Graphics.Imaging.ExifOrientationMode.RespectExifOrientation, Windows.Graphics.Imaging.ColorManagementMode.ColorManageToSRgb);
                             var pixelData = pixelProvider.DetachPixelData();
 
-                            InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
-                            IOutputStream outputStream = randomAccessStream.GetOutputStreamAt(0);
-                            DataWriter writer = new DataWriter(outputStream);
+                            using InMemoryRandomAccessStream randomAccessStream = new();
+                            using var outputStream = randomAccessStream.GetOutputStreamAt(0);
+                            using DataWriter writer = new(outputStream);
                             writer.WriteBytes(pixelData);
                             await writer.StoreAsync();
                             await writer.FlushAsync();

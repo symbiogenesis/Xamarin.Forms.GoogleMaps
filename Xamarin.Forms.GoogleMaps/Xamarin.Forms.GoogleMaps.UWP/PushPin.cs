@@ -22,7 +22,14 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     internal class PushPin : ContentControl
     {
-        private static Windows.UI.Xaml.DataTemplate _template = null;
+        private static ColorConverter _colorConverter = new();
+        private static ViewToRendererConverter _viewToRendererConverter = new();
+        private static Windows.Foundation.Point _anchor = new(0.5, 1);
+        private static Windows.UI.Xaml.Thickness _detailsPadding = new(5);
+        private static Windows.UI.Xaml.Media.SolidColorBrush _whiteBrush = new(Colors.White);
+        private static Windows.UI.Xaml.Media.SolidColorBrush _blackBrush = new(Colors.Black);
+
+        private static Windows.UI.Xaml.DataTemplate _template;
 
         private readonly Pin _pin;
 
@@ -47,9 +54,18 @@ namespace Xamarin.Forms.Maps.WinRT
             pin.NativeObject = this;
         }
 
+        ~PushPin()
+        {
+            try
+            {
+                DetailsView.Tapped -= DetailsViewOnTapped;
+            }
+            catch { }
+        }
+
         public Guid Id { get; set; }
 
-        public StackPanel Root { get; set; } = new StackPanel() { Width = 250 };
+        public StackPanel Root { get; set; } = new() { Width = 250 };
         public StackPanel DetailsView { get; set; }
         public TextBlock PinLabel { get; set; }
         public TextBlock Address { get; set; }
@@ -65,13 +81,13 @@ namespace Xamarin.Forms.Maps.WinRT
                 Width = 250,
                 Height = 70,
                 Opacity = 0.7,
-                Padding = new Windows.UI.Xaml.Thickness(5),
-                Background = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.White)
+                Padding = _detailsPadding,
+                Background = _whiteBrush
             };
             PinLabel = new TextBlock()
             {
                 Text = pin.Label,
-                Foreground = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.Black),
+                Foreground = _blackBrush,
                 FontWeight = FontWeights.Bold,
                 TextWrapping = TextWrapping.WrapWholeWords,
                 HorizontalAlignment = HorizontalAlignment.Center
@@ -80,7 +96,7 @@ namespace Xamarin.Forms.Maps.WinRT
             Address = new TextBlock()
             {
                 Text = pin.Address ?? string.Empty,
-                Foreground = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.Black),
+                Foreground = _blackBrush,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
@@ -107,8 +123,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 {
                     if (pin.Icon != null && pin.Icon.Color != Color.Black)
                     {
-                        var converter = new ColorConverter();
-                        path.Fill = (Windows.UI.Xaml.Media.SolidColorBrush)converter.Convert(pin.Icon.Color, null, null, null);
+                        path.Fill = (Windows.UI.Xaml.Media.SolidColorBrush)_colorConverter.Convert(pin.Icon.Color, null, null, null);
                     }
                     if (Icon != null)
                     {
@@ -143,14 +158,13 @@ namespace Xamarin.Forms.Maps.WinRT
 
         public void UpdateLocation()
         {
-            var anchor = new Windows.Foundation.Point(0.5, 1);
             var location = new Geopoint(new BasicGeoposition
             {
                 Latitude = _pin.Position.Latitude,
                 Longitude = _pin.Position.Longitude
             });
             MapControl.SetLocation(this, location);
-            MapControl.SetNormalizedAnchorPoint(this, anchor);
+            MapControl.SetNormalizedAnchorPoint(this, _anchor);
         }
 
         private void TransformXamarinViewToUWPBitmap(Pin outerItem)
@@ -159,8 +173,7 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 var iconView = outerItem.Icon.View;
 
-                ViewToRendererConverter converter = new ViewToRendererConverter();
-                var frameworkElement = converter.Convert(iconView, null, null, null) as FrameworkElement;
+                var frameworkElement = (FrameworkElement)_viewToRendererConverter.Convert(iconView, null, null, null);
 
                 frameworkElement.Height = iconView.HeightRequest;
                 frameworkElement.Width = iconView.WidthRequest;
