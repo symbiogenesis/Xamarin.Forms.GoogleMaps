@@ -30,7 +30,18 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     public class MapRenderer : ViewRenderer<Map, MapControl>
     {
-        private readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
+        private static readonly Geopoint _topOfMap = new(new BasicGeoposition()
+        {
+            Latitude = 85,
+            Longitude = 0
+        });
+        private static readonly Geopoint _bottomOfMap = new(new BasicGeoposition()
+        {
+            Latitude = -85,
+            Longitude = 0
+        });
+
+        private readonly UiSettingsLogic _uiSettingsLogic = new();
         private readonly CameraLogic _cameraLogic ;
 
         private Map Map => Element;
@@ -283,13 +294,7 @@ namespace Xamarin.Forms.Maps.WinRT
             }
             catch
             {
-                var topOfMap = new Geopoint(new BasicGeoposition()
-                {
-                    Latitude = 85,
-                    Longitude = 0
-                });
-
-                map.GetOffsetFromLocation(topOfMap, out Windows.Foundation.Point topPoint);
+                map.GetOffsetFromLocation(_topOfMap, out Windows.Foundation.Point topPoint);
                 map.GetLocationFromOffset(new Windows.Foundation.Point(0, topPoint.Y), out topLeft);
             }
 
@@ -299,13 +304,7 @@ namespace Xamarin.Forms.Maps.WinRT
             }
             catch
             {
-                var topOfMap = new Geopoint(new BasicGeoposition()
-                {
-                    Latitude = 85,
-                    Longitude = 0
-                });
-
-                map.GetOffsetFromLocation(topOfMap, out Windows.Foundation.Point topPoint);
+                map.GetOffsetFromLocation(_topOfMap, out Windows.Foundation.Point topPoint);
                 map.GetLocationFromOffset(new Windows.Foundation.Point(topPoint.X, topPoint.Y), out topRight);
             }
 
@@ -315,13 +314,7 @@ namespace Xamarin.Forms.Maps.WinRT
             }
             catch
             {
-                var bottomOfMap = new Geopoint(new BasicGeoposition()
-                {
-                    Latitude = -85,
-                    Longitude = 0
-                });
-
-                map.GetOffsetFromLocation(bottomOfMap, out Windows.Foundation.Point bottomPoint);
+                map.GetOffsetFromLocation(_bottomOfMap, out Windows.Foundation.Point bottomPoint);
                 map.GetLocationFromOffset(new Windows.Foundation.Point(bottomPoint.X, bottomPoint.Y), out bottomRight);
             }
 
@@ -331,13 +324,7 @@ namespace Xamarin.Forms.Maps.WinRT
             }
             catch
             {
-                var bottomOfMap = new Geopoint(new BasicGeoposition()
-                {
-                    Latitude = -85,
-                    Longitude = 0
-                });
-
-                map.GetOffsetFromLocation(bottomOfMap, out Windows.Foundation.Point bottomPoint);
+                map.GetOffsetFromLocation(_bottomOfMap, out Windows.Foundation.Point bottomPoint);
                 map.GetLocationFromOffset(new Windows.Foundation.Point(0, bottomPoint.Y), out bottomLeft);
             }
 
@@ -363,13 +350,7 @@ namespace Xamarin.Forms.Maps.WinRT
             }
             catch
             {
-                var topOfMap = new Geopoint(new BasicGeoposition()
-                {
-                    Latitude = 85,
-                    Longitude = 0
-                });
-
-                map.GetOffsetFromLocation(topOfMap, out Windows.Foundation.Point topPoint);
+                map.GetOffsetFromLocation(_topOfMap, out Windows.Foundation.Point topPoint);
                 map.GetLocationFromOffset(new Windows.Foundation.Point(0, topPoint.Y), out topLeft);
             }
 
@@ -380,13 +361,7 @@ namespace Xamarin.Forms.Maps.WinRT
             }
             catch
             {
-                var bottomOfMap = new Geopoint(new BasicGeoposition()
-                {
-                    Latitude = -85,
-                    Longitude = 0
-                });
-
-                map.GetOffsetFromLocation(bottomOfMap, out Windows.Foundation.Point bottomPoint);
+                map.GetOffsetFromLocation(_bottomOfMap, out Windows.Foundation.Point bottomPoint);
                 map.GetLocationFromOffset(new Windows.Foundation.Point(bottomPoint.X, bottomPoint.Y), out bottomRight);
             }
 
