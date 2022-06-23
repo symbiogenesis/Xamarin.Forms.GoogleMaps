@@ -93,12 +93,12 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty MapStyleProperty = BindableProperty.Create(nameof(MapStyle), typeof(MapStyle), typeof(Map), null);
 
-        private readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
-        private readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
-        private readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
-        private readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
-        private readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
-        private readonly ObservableCollection<GroundOverlay> _groundOverlays = new ObservableCollection<GroundOverlay>();
+        private readonly ObservableCollection<Pin> _pins = new();
+        private readonly ObservableCollection<Polyline> _polylines = new();
+        private readonly ObservableCollection<Polygon> _polygons = new();
+        private readonly ObservableCollection<Circle> _circles = new();
+        private readonly ObservableCollection<TileLayer> _tileLayers = new();
+        private readonly ObservableCollection<GroundOverlay> _groundOverlays = new();
 
         public event EventHandler<PinClickedEventArgs> PinClicked;
 
@@ -160,6 +160,16 @@ namespace Xamarin.Forms.GoogleMaps
             _circles.CollectionChanged += CirclesOnCollectionChanged;
             _tileLayers.CollectionChanged += TileLayersOnCollectionChanged;
             _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
+        }
+
+        ~Map()
+        {
+            _pins.CollectionChanged -= PinsOnCollectionChanged;
+            _polylines.CollectionChanged -= PolylinesOnCollectionChanged;
+            _polygons.CollectionChanged -= PolygonsOnCollectionChanged;
+            _circles.CollectionChanged -= CirclesOnCollectionChanged;
+            _tileLayers.CollectionChanged -= TileLayersOnCollectionChanged;
+            _groundOverlays.CollectionChanged -= GroundOverlays_CollectionChanged;
         }
 
         [Obsolete("Please use Map.UiSettings.ScrollGesturesEnabled instead of this")]
