@@ -22,18 +22,9 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     internal class PushPin : ContentControl
     {
-        private readonly Pin _pin;
         private static Windows.UI.Xaml.DataTemplate _template = null;
 
-        public Guid Id { get; set; }
-
-        public StackPanel Root { get; set; } = new StackPanel() { Width = 250 };
-        public StackPanel DetailsView { get; set; }
-        public TextBlock PinLabel { get; set; }
-        public TextBlock Address { get; set; }
-        public FrameworkElement Icon { get; set; }
-
-        public event EventHandler<TappedRoutedEventArgs> InfoWindowClicked;
+        private readonly Pin _pin;
 
         internal PushPin(Pin pin)
         {
@@ -55,6 +46,16 @@ namespace Xamarin.Forms.Maps.WinRT
 
             pin.NativeObject = this;
         }
+
+        public Guid Id { get; set; }
+
+        public StackPanel Root { get; set; } = new StackPanel() { Width = 250 };
+        public StackPanel DetailsView { get; set; }
+        public TextBlock PinLabel { get; set; }
+        public TextBlock Address { get; set; }
+        public FrameworkElement Icon { get; set; }
+
+        public event EventHandler<TappedRoutedEventArgs> InfoWindowClicked;
 
         private void SetupDetailsView(Pin pin)
         {
