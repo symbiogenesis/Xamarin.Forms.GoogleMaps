@@ -22,12 +22,12 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     internal class PushPin : ContentControl
     {
-        private static ColorConverter _colorConverter = new();
-        private static ViewToRendererConverter _viewToRendererConverter = new();
-        private static Windows.Foundation.Point _anchor = new(0.5, 1);
-        private static Windows.UI.Xaml.Thickness _detailsPadding = new(5);
-        private static Windows.UI.Xaml.Media.SolidColorBrush _whiteBrush = new(Colors.White);
-        private static Windows.UI.Xaml.Media.SolidColorBrush _blackBrush = new(Colors.Black);
+        private static readonly ColorConverter _colorConverter = new();
+        private static readonly ViewToRendererConverter _viewToRendererConverter = new();
+        private static readonly Windows.Foundation.Point _anchor = new(0.5, 1);
+        private static readonly Windows.UI.Xaml.Thickness _detailsPadding = new(5);
+        private static readonly Windows.UI.Xaml.Media.SolidColorBrush _whiteBrush = new(Colors.White);
+        private static readonly Windows.UI.Xaml.Media.SolidColorBrush _blackBrush = new(Colors.Black);
 
         private static Windows.UI.Xaml.DataTemplate _template;
 
