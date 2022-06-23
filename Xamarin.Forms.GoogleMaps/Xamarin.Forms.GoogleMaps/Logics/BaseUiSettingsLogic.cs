@@ -15,7 +15,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             this.Map = map;
             this.NativeMap = nativeMap;
 
-            map.UiSettings.PropertyChanged += UiSettings_PropertyChanged;
+            this.Map.UiSettings.PropertyChanged += UiSettings_PropertyChanged;
+        }
+
+        public void Unregister()
+        {
+            if (this.Map == null)
+            {
+                return;
+            }
+
+            this.Map.UiSettings.PropertyChanged -= UiSettings_PropertyChanged;
         }
 
         void UiSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -56,16 +66,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             {
                 OnUpdateMapToolbarEnabled();
             }
-        }
-
-        public void Unregister()
-        {
-            if (this.Map == null)
-            {
-                return;
-            }
-
-            this.Map.UiSettings.PropertyChanged -= UiSettings_PropertyChanged;
         }
 
         public virtual void Initialize()
