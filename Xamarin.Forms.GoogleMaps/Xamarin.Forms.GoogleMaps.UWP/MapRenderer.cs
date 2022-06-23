@@ -42,17 +42,13 @@ namespace Xamarin.Forms.Maps.WinRT
         });
 
         private readonly UiSettingsLogic _uiSettingsLogic = new();
-        private readonly CameraLogic _cameraLogic ;
+        private readonly CameraLogic _cameraLogic = new();
 
         private Map Map => Element;
 
         private MapControl NativeMap => Control;
 
-        readonly BaseLogic<MapControl>[] _logics;
-
-        public MapRenderer() : base()
-        {
-            _logics = new BaseLogic<MapControl>[]
+        private static readonly BaseLogic<MapControl>[] _logics = new BaseLogic<MapControl>[]
             {
                 new PinLogic(),
                 new PolylineLogic(),
@@ -60,9 +56,6 @@ namespace Xamarin.Forms.Maps.WinRT
                 new CircleLogic(),
                 new TileLayerLogic(),
             };
-
-            _cameraLogic = new CameraLogic();
-        }
 
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
@@ -82,6 +75,11 @@ namespace Xamarin.Forms.Maps.WinRT
                     oldMapView.ActualCameraChanged -= OnActualCameraChanged;
                     oldMapView.ZoomLevelChanged -= OnZoomLevelChanged;
                     oldMapView.CenterChanged -= Control_CenterChanged;
+                }
+
+                foreach (var logic in _logics)
+                {
+                    logic.Unregister(oldMapView, mapModel);
                 }
             }
 
