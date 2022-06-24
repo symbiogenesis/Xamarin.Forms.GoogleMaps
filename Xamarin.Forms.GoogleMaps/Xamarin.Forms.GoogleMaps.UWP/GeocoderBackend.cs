@@ -12,7 +12,7 @@ namespace Xamarin.Forms.GoogleMaps.UWP
 namespace Xamarin.Forms.Maps.WinRT
 #endif
 {
-    internal class GeocoderBackend
+    internal static class GeocoderBackend
     {
         public static void Register()
         {
