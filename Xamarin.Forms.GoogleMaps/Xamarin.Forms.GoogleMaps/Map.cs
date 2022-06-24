@@ -622,28 +622,20 @@ namespace Xamarin.Forms.GoogleMaps
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Pin item in e.NewItems)
                         _pins.Add(item);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Pin item in e.OldItems)
                         _pins.Remove(item);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Pin item in e.OldItems)
                         _pins.Remove(item);
                     foreach (Pin item in e.NewItems)
@@ -681,28 +673,20 @@ namespace Xamarin.Forms.GoogleMaps
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Polyline item in e.NewItems)
                         _polylines.Add(item);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Polyline item in e.OldItems)
                         _polylines.Remove(item);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Polyline item in e.OldItems)
                         _polylines.Remove(item);
                     foreach (Polyline item in e.NewItems)
@@ -740,28 +724,20 @@ namespace Xamarin.Forms.GoogleMaps
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Polygon item in e.NewItems)
                         _polygons.Add(item);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Polygon item in e.OldItems)
                         _polygons.Remove(item);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Polygon item in e.OldItems)
                         _polygons.Remove(item);
                     foreach (Polygon item in e.NewItems)
@@ -799,28 +775,20 @@ namespace Xamarin.Forms.GoogleMaps
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Circle item in e.NewItems)
                         _circles.Add(item);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Circle item in e.OldItems)
                         _circles.Remove(item);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (Circle item in e.OldItems)
                         _circles.Remove(item);
                     foreach (Circle item in e.NewItems)
@@ -858,28 +826,20 @@ namespace Xamarin.Forms.GoogleMaps
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (TileLayer item in e.NewItems)
                         _tileLayers.Add(item);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (TileLayer item in e.OldItems)
                         _tileLayers.Remove(item);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (TileLayer item in e.OldItems)
                         _tileLayers.Remove(item);
                     foreach (TileLayer item in e.NewItems)
@@ -917,28 +877,20 @@ namespace Xamarin.Forms.GoogleMaps
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (GroundOverlay item in e.NewItems)
                         _groundOverlays.Add(item);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (GroundOverlay item in e.OldItems)
                         _groundOverlays.Remove(item);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (GroundOverlay item in e.OldItems)
                         _groundOverlays.Remove(item);
                     foreach (GroundOverlay item in e.NewItems)
@@ -956,28 +908,20 @@ namespace Xamarin.Forms.GoogleMaps
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (object item in e.NewItems)
                         CreatePin(item);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     // Not tracking order
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (object item in e.OldItems)
                         RemovePin(item);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.OldStartingIndex == -1)
-                        goto case NotifyCollectionChangedAction.Reset;
                     foreach (object item in e.OldItems)
                         RemovePin(item);
                     foreach (object item in e.NewItems)
