@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Microsoft.Toolkit.Uwp.UI;
+
 using Windows.Devices.Geolocation;
 using Windows.UI;
 using Windows.UI.Text;
@@ -154,6 +156,8 @@ namespace Xamarin.Forms.Maps.WinRT
                     TransformXamarinViewToUWPBitmap(pin);
                 }
             }
+
+            FrameworkElementExtensions.SetCursor(Icon, Windows.UI.Core.CoreCursorType.Hand);
         }
 
         public void UpdateLocation()
