@@ -106,8 +106,6 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasZoomEnabled();
                 UpdateHasRotationEnabled();
 
-                await UpdateIsShowingUser(Element.MyLocationEnabled);
-
                 foreach (var logic in _logics)
                 {
                     logic.Register(oldMapView, e.OldElement, NativeMap, Map);
@@ -216,8 +214,7 @@ namespace Xamarin.Forms.Maps.WinRT
             if (Element.MyLocationEnabled)
             {
                 var myGeolocator = new Geolocator();
-                if (myGeolocator.LocationStatus != PositionStatus.NotAvailable &&
-                    myGeolocator.LocationStatus != PositionStatus.Disabled)
+                if (myGeolocator.LocationStatus == PositionStatus.Ready)
                 {
                     var userPosition = await myGeolocator.GetGeopositionAsync();
                     if (userPosition?.Coordinate != null)

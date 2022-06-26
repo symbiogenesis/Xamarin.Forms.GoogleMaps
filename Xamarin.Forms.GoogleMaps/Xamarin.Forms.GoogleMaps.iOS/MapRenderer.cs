@@ -139,7 +139,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
                 _uiSettingsLogic.Register(Map, NativeMap);
                 UpdateMapType();
-                UpdateIsShowingUser(_uiSettingsLogic.MyLocationButtonEnabled);
                 UpdateHasScrollEnabled(_uiSettingsLogic.ScrollGesturesEnabled);
                 UpdateHasZoomEnabled(_uiSettingsLogic.ZoomGesturesEnabled);
                 UpdateHasRotationEnabled(_uiSettingsLogic.RotateGesturesEnabled);
@@ -171,10 +170,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
             {
                 UpdateMapType();
-            }
-            else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-            {
-                UpdateIsShowingUser();
             }
             else if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
             {
@@ -299,14 +294,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
 #pragma warning disable 618
             NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? Map.HasRotationEnabled;
-#pragma warning restore 618
-        }
-
-        private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
-        {
-#pragma warning disable 618
-            NativeMap.MyLocationEnabled = Map.IsShowingUser;
-            NativeMap.Settings.MyLocationButton = initialMyLocationButtonEnabled ?? Map.IsShowingUser;
 #pragma warning restore 618
         }
 

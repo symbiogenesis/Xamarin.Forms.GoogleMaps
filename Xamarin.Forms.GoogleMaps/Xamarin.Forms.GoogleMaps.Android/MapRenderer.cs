@@ -185,7 +185,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 nativeMap.SetOnMapLongClickListener(this);
                 nativeMap.SetOnMyLocationButtonClickListener(this);
 
-                UpdateIsShowingUser(_uiSettingsLogic.MyLocationButtonEnabled);
                 UpdateHasScrollEnabled(_uiSettingsLogic.ScrollGesturesEnabled);
                 UpdateHasZoomEnabled(_uiSettingsLogic.ZoomControlsEnabled, _uiSettingsLogic.ZoomGesturesEnabled);
                 UpdateHasRotationEnabled(_uiSettingsLogic.RotateGesturesEnabled);
@@ -275,11 +274,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 return;
             }
 
-            if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-            {
-                UpdateIsShowingUser();
-            }
-            else if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
+            if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
             {
                 UpdateMyLocationEnabled();
             }
