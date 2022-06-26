@@ -47,10 +47,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 new GroundOverlayLogic(Config.ImageFactory)
             };
 
-            _cameraLogic = new CameraLogic(() =>
-            {
-                OnCameraPositionChanged(NativeMap.Camera);
-            });
+            _cameraLogic = new CameraLogic(() => OnCameraPositionChanged(NativeMap.Camera));
         }
 
         public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
@@ -127,11 +124,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if (Control == null)
                 {
                     SetNativeControl(new MapView(RectangleF.Empty));
-                    var mkMapView = (MapView)Control;
-                    mkMapView.CameraPositionChanged += CameraPositionChanged;
-                    mkMapView.CoordinateTapped += CoordinateTapped;
-                    mkMapView.CoordinateLongPressed += CoordinateLongPressed;
-                    mkMapView.DidTapMyLocationButton = DidTapMyLocation;
+                    var nativeMap = NativeMap;
+                    nativeMap.CameraPositionChanged += CameraPositionChanged;
+                    nativeMap.CoordinateTapped += CoordinateTapped;
+                    nativeMap.CoordinateLongPressed += CoordinateLongPressed;
+                    nativeMap.DidTapMyLocationButton = DidTapMyLocation;
                 }
 
                 _cameraLogic.Register(Map, NativeMap);
@@ -158,7 +155,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     logic.RestoreItems();
                     logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
-
             }
         }
 
@@ -201,7 +197,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateIsTrafficEnabled();
             }
             else if (e.PropertyName == VisualElement.HeightProperty.PropertyName &&
-                     ((Map)Element).InitialCameraUpdate != null)
+                     Map.InitialCameraUpdate != null)
             {
                 _shouldUpdateRegion = true;
             }
@@ -236,11 +232,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
             if (_shouldUpdateRegion && !_ready)
             {
-                _cameraLogic.MoveCamera(((Map)Element).InitialCameraUpdate);
+                _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
                 _ready = true;
                 _shouldUpdateRegion = false;
             }
-
         }
 
         void OnSnapshot(TakeSnapshotMessage snapshotMessage)
@@ -251,10 +246,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             UIGraphics.EndImageContext();
 
             // Why using task? Because Android side is asynchronous. 
-            Task.Run(() =>
-            {
-                snapshotMessage.OnSnapshot.Invoke(snapshot.AsPNG().AsStream());
-            });
+            Task.Run(() => snapshotMessage.OnSnapshot.Invoke(snapshot.AsPNG().AsStream()));
         }
 
         protected void CameraPositionChanged(object sender, GMSCameraEventArgs args)
@@ -267,9 +259,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             if (Element == null)
                 return;
 
-            var mkMapView = (MapView)Control;
-
-            Map.Region = mkMapView.Projection.VisibleRegion.ToRegion();
+            Map.Region = NativeMap.Projection.VisibleRegion.ToRegion();
 
             var camera = pos.ToXamarinForms();
             Map.CameraPosition = camera;
@@ -301,58 +291,58 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         private void UpdateHasZoomEnabled(bool? initialZoomGesturesEnabled = null)
         {
 #pragma warning disable 618
-            NativeMap.Settings.ZoomGestures = initialZoomGesturesEnabled ?? ((Map)Element).HasZoomEnabled;
+            NativeMap.Settings.ZoomGestures = initialZoomGesturesEnabled ?? Map.HasZoomEnabled;
 #pragma warning restore 618
         }
 
         private void UpdateHasRotationEnabled(bool? initialRotateGesturesEnabled = null)
         {
 #pragma warning disable 618
-            NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? ((Map)Element).HasRotationEnabled;
+            NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? Map.HasRotationEnabled;
 #pragma warning restore 618
         }
 
         private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
 #pragma warning disable 618
-            ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
-            ((MapView)Control).Settings.MyLocationButton = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
+            NativeMap.MyLocationEnabled = Map.IsShowingUser;
+            NativeMap.Settings.MyLocationButton = initialMyLocationButtonEnabled ?? Map.IsShowingUser;
 #pragma warning restore 618
         }
 
         void UpdateMyLocationEnabled()
         {
-            ((MapView)Control).MyLocationEnabled = ((Map)Element).MyLocationEnabled;
+            NativeMap.MyLocationEnabled = Map.MyLocationEnabled;
         }
 
         void UpdateIsTrafficEnabled()
         {
-            ((MapView)Control).TrafficEnabled = ((Map)Element).IsTrafficEnabled;
+            NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
         }
 
         void UpdateHasIndoorEnabled()
         {
-            ((MapView)Control).IndoorEnabled = ((Map)Element).IsIndoorEnabled;
+            NativeMap.IndoorEnabled = Map.IsIndoorEnabled;
         }
 
         void UpdateMapType()
         {
-            switch (((Map)Element).MapType)
+            switch (Map.MapType)
             {
                 case MapType.Street:
-                    ((MapView)Control).MapType = MapViewType.Normal;
+                    NativeMap.MapType = MapViewType.Normal;
                     break;
                 case MapType.Satellite:
-                    ((MapView)Control).MapType = MapViewType.Satellite;
+                    NativeMap.MapType = MapViewType.Satellite;
                     break;
                 case MapType.Hybrid:
-                    ((MapView)Control).MapType = MapViewType.Hybrid;
+                    NativeMap.MapType = MapViewType.Hybrid;
                     break;
                 case MapType.Terrain:
-                    ((MapView)Control).MapType = MapViewType.Terrain;
+                    NativeMap.MapType = MapViewType.Terrain;
                     break;
                 case MapType.None:
-                    ((MapView)Control).MapType = MapViewType.None;
+                    NativeMap.MapType = MapViewType.None;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -361,19 +351,19 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdatePadding()
         {
-            ((MapView)Control).Padding = ((Map)Element).Padding.ToUIEdgeInsets();
+            NativeMap.Padding = Map.Padding.ToUIEdgeInsets();
         }
 
         void UpdateMapStyle()
         {
             if (Map.MapStyle == null)
             {
-                ((MapView)Control).MapStyle = null;
+                NativeMap.MapStyle = null;
             }
             else
             {
                 var mapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, null);
-                ((MapView)Control).MapStyle = mapStyle;
+                NativeMap.MapStyle = mapStyle;
             }
         }
 
