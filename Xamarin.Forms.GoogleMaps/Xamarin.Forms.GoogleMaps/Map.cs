@@ -12,7 +12,7 @@ using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class Map : View, IEnumerable<Pin>
+    public class Map : View, IEnumerable<Pin>, IDisposable
     {
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(Map), default(IEnumerable),
             propertyChanged: (b, o, n) => ((Map)b).OnItemsSourcePropertyChanged((IEnumerable)o, (IEnumerable)n));
@@ -97,6 +97,8 @@ namespace Xamarin.Forms.GoogleMaps
         private readonly ObservableCollection<Circle> _circles = new();
         private readonly ObservableCollection<TileLayer> _tileLayers = new();
         private readonly ObservableCollection<GroundOverlay> _groundOverlays = new();
+
+        public event EventHandler Disposing;
 
         public event EventHandler<PinClickedEventArgs> PinClicked;
 
@@ -979,6 +981,12 @@ namespace Xamarin.Forms.GoogleMaps
             }
 
             return OnToScreenLocation.Invoke(position);
+        }
+
+        public void Dispose()
+        {
+            UnsubscribeEvents();
+            Disposing?.Invoke(this, EventArgs.Empty);
         }
     }
 }

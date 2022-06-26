@@ -67,6 +67,7 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 var mapModel = e.OldElement;
                 mapModel.OnSnapshot -= OnSnapshot;
+                mapModel.Disposing -= OnDispose;
                 _cameraLogic.Unregister();
                 _uiSettingsLogic.Unregister();
 
@@ -85,7 +86,7 @@ namespace Xamarin.Forms.Maps.WinRT
 
             if (e.NewElement != null)
             {
-                var mapModel = e.NewElement;
+                var newElement = e.NewElement;
                 if (Control == null)
                 {
                     SetNativeControl(new MapControl());
@@ -96,10 +97,11 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.ActualCameraChanged += OnActualCameraChanged;
                 }
 
-                _cameraLogic.Register(Map, NativeMap);
-                Map.OnSnapshot += OnSnapshot;
+                _cameraLogic.Register(newElement, NativeMap);
+                newElement.OnSnapshot += OnSnapshot;
+                newElement.Disposing += OnDispose;
 
-                _uiSettingsLogic.Register(Map, NativeMap);
+                _uiSettingsLogic.Register(newElement, NativeMap);
                 _uiSettingsLogic.Initialize();
                 UpdateMapType();
                 UpdateHasScrollEnabled();
@@ -108,11 +110,20 @@ namespace Xamarin.Forms.Maps.WinRT
 
                 foreach (var logic in _logics)
                 {
-                    logic.Register(oldMapView, e.OldElement, NativeMap, Map);
+                    logic.Register(oldMapView, e.OldElement, NativeMap, newElement);
                     logic.RestoreItems();
                     logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
             }
+            else
+            {
+                Dispose();
+            }
+        }
+
+        private void OnDispose(object sender, EventArgs e)
+        {
+            Dispose(true);
         }
 
         private void Control_CenterChanged(MapControl sender, object args)
