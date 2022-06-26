@@ -150,7 +150,24 @@ namespace Xamarin.Forms.GoogleMaps
         public Map()
         {
             VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
+        }
 
+        protected override void OnParentSet()
+        {
+            base.OnParentSet();
+
+            if (Parent == null)
+            {
+                UnsubscribeEvents();
+            }
+            else
+            {
+                SubscribeEvents();
+            }
+        }
+
+        private void SubscribeEvents()
+        {
             _pins.CollectionChanged += PinsOnCollectionChanged;
             _polylines.CollectionChanged += PolylinesOnCollectionChanged;
             _polygons.CollectionChanged += PolygonsOnCollectionChanged;
@@ -159,7 +176,7 @@ namespace Xamarin.Forms.GoogleMaps
             _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
         }
 
-        ~Map()
+        private void UnsubscribeEvents()
         {
             _pins.CollectionChanged -= PinsOnCollectionChanged;
             _polylines.CollectionChanged -= PolylinesOnCollectionChanged;
