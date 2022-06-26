@@ -1,18 +1,16 @@
-﻿﻿using System;
- using System.Collections.Generic;
- using System.ComponentModel;
-using Xamarin.Forms.Platform.iOS;
-using Google.Maps;
+﻿using Google.Maps;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
-using Xamarin.Forms.GoogleMaps.Logics.iOS;
-using Xamarin.Forms.GoogleMaps.Logics;
-using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms.GoogleMaps.Internals;
-using GCameraUpdate = Google.Maps.CameraUpdate;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.Logics.iOS;
+using Xamarin.Forms.Platform.iOS;
 using GCameraPosition = Google.Maps.CameraPosition;
-using System.Threading.Tasks;
-using Foundation;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -33,7 +31,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         private bool _ready;
 
         internal readonly IList<BaseLogic<MapView>> Logics;
-        
+
         public MapRenderer()
         {
             Logics = new List<BaseLogic<MapView>>
@@ -61,19 +59,19 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
             if (disposing)
             {
-                if(Map!=null)
+                if (Map != null)
                 {
                     Map.OnSnapshot -= OnSnapshot;
                     foreach (var logic in Logics)
                     {
                         logic.Unregister(NativeMap, Map);
                     }
-                }               
+                }
                 _cameraLogic.Unregister();
                 _uiSettingsLogic.Unregister();
 
                 var mkMapView = (MapView)Control;
-                if(mkMapView!=null)
+                if (mkMapView != null)
                 {
                     mkMapView.CoordinateLongPressed -= CoordinateLongPressed;
                     mkMapView.CoordinateTapped -= CoordinateTapped;
@@ -200,7 +198,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateIsTrafficEnabled();
             }
             else if (e.PropertyName == VisualElement.HeightProperty.PropertyName &&
-                     ((Map) Element).InitialCameraUpdate != null)
+                     ((Map)Element).InitialCameraUpdate != null)
             {
                 _shouldUpdateRegion = true;
             }
@@ -250,7 +248,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             UIGraphics.EndImageContext();
 
             // Why using task? Because Android side is asynchronous. 
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 snapshotMessage.OnSnapshot.Invoke(snapshot.AsPNG().AsStream());
             });
@@ -331,7 +329,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdateHasIndoorEnabled()
         {
-            ((MapView) Control).IndoorEnabled = ((Map)Element).IsIndoorEnabled;
+            ((MapView)Control).IndoorEnabled = ((Map)Element).IsIndoorEnabled;
         }
 
         void UpdateMapType()
