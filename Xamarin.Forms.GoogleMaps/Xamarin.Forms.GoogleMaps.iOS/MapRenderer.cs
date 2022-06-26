@@ -16,6 +16,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 {
     public class MapRenderer : ViewRenderer
     {
+        private static readonly UIColor _tealColor = Color.Teal.ToUIColor();
+        private static readonly UIColor _blackColor = Color.Black.ToUIColor();
+
         bool _shouldUpdateRegion = true;
 
         // ReSharper disable once MemberCanBePrivate.Global
@@ -93,8 +96,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 var label = new UILabel()
                 {
                     Text = "Xamarin.Forms.GoogleMaps",
-                    BackgroundColor = Color.Teal.ToUIColor(),
-                    TextColor = Color.Black.ToUIColor(),
+                    BackgroundColor = _tealColor,
+                    TextColor = _blackColor,
                     TextAlignment = UITextAlignment.Center
                 };
                 SetNativeControl(label);
