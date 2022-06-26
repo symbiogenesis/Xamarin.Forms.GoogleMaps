@@ -266,18 +266,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             if (Element == null)
                 return;
 
-            var mapModel = (Map)Element;
             var mkMapView = (MapView)Control;
-
-            var region = mkMapView.Projection.VisibleRegion;
-            var minLat = Math.Min(Math.Min(Math.Min(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
-            var minLon = Math.Min(Math.Min(Math.Min(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
-            var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
-            var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
-            
-#pragma warning disable 618
-            mapModel.VisibleRegion = new MapSpan(pos.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
-#pragma warning restore 618
 
             Map.Region = mkMapView.Projection.VisibleRegion.ToRegion();
 

@@ -140,7 +140,6 @@ namespace Xamarin.Forms.GoogleMaps
         internal Func<Point, Position> OnFromScreenLocation { get; set; }
         internal Func<Position, Point> OnToScreenLocation { get; set; }
 
-        private MapSpan _visibleRegion;
         private MapRegion _region;
 
         //// Simone Marra
@@ -344,22 +343,6 @@ namespace Xamarin.Forms.GoogleMaps
         public IList<GroundOverlay> GroundOverlays
         {
             get { return _groundOverlays; }
-        }
-
-        [Obsolete("Please use Map.Region instead of this")]
-        public MapSpan VisibleRegion
-        {
-            get { return _visibleRegion; }
-            internal set
-            {
-                if (_visibleRegion == value)
-                    return;
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-                OnPropertyChanging();
-                _visibleRegion = value;
-                OnPropertyChanged();
-            }
         }
 
         public MapRegion Region
