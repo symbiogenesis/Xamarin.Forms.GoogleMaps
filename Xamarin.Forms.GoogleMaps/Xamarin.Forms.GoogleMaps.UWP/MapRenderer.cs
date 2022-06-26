@@ -57,7 +57,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 new TileLayerLogic(),
             };
 
-        protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
 
