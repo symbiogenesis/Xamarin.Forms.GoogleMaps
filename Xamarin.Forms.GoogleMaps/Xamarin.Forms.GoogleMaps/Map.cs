@@ -602,9 +602,12 @@ namespace Xamarin.Forms.GoogleMaps
 
             _pins.Clear();
 
-            foreach (var pin in newItemsSource)
+            if (newItemsSource != null)
             {
-                _pins.Add(pin);
+                foreach (var pin in newItemsSource)
+                {
+                    _pins.Add(pin);
+                }
             }
         }
 
