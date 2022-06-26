@@ -166,10 +166,8 @@ namespace Xamarin.Forms.Maps.WinRT
 
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
                 UpdateMapType();
-            else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-                await UpdateIsShowingUser(Element.MyLocationEnabled);
             else if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
-                await UpdateIsShowingUser(Element.MyLocationEnabled);
+                await UpdateMyLocationEnabled();
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
                 UpdateHasScrollEnabled();
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
@@ -213,9 +211,9 @@ namespace Xamarin.Forms.Maps.WinRT
         bool _firstZoomLevelChangeFired;
         Ellipse _userPositionCircle;
 
-        async Task UpdateIsShowingUser(bool enabled)
+        async Task UpdateMyLocationEnabled()
         {
-            if (enabled)
+            if (Element.MyLocationEnabled)
             {
                 var myGeolocator = new Geolocator();
                 if (myGeolocator.LocationStatus != PositionStatus.NotAvailable &&

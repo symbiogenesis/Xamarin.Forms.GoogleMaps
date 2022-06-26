@@ -26,8 +26,6 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
 #pragma warning disable CS0618 // Type or member is obsolete
-        public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
-
         public static readonly BindableProperty MyLocationEnabledProperty = BindableProperty.Create(nameof(MyLocationEnabled), typeof(bool), typeof(Map), default(bool));
 
         public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create(nameof(HasScrollEnabled), typeof(bool), typeof(Map), true);
@@ -202,13 +200,6 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (bool)GetValue(IndoorEnabledProperty); }
             set { SetValue(IndoorEnabledProperty, value); }
-        }
-
-        [Obsolete("Please use Map.MyLocationEnabled and Map.UiSettings.MyLocationButtonEnabled instead of this")]
-        public bool IsShowingUser
-        {
-            get { return (bool)GetValue(IsShowingUserProperty); }
-            set { SetValue(IsShowingUserProperty, value); }
         }
 
         public bool MyLocationEnabled

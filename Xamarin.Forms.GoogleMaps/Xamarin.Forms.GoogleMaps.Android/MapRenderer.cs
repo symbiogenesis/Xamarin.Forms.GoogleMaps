@@ -314,14 +314,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
-        {
-#pragma warning disable 618
-            NativeMap.MyLocationEnabled = Map.IsShowingUser;
-            NativeMap.UiSettings.MyLocationButtonEnabled = initialMyLocationButtonEnabled ?? Map.IsShowingUser;
-#pragma warning restore 618
-        }
-
         private void UpdateMyLocationEnabled()
         {
             NativeMap.MyLocationEnabled = Map.MyLocationEnabled;
