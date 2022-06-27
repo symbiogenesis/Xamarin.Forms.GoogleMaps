@@ -156,16 +156,16 @@ namespace Xamarin.Forms.GoogleMaps
 
         protected override void OnParentSet()
         {
-            base.OnParentSet();
-
             if (Parent == null)
             {
-                UnsubscribeEvents();
+                Dispose();
             }
             else
             {
                 SubscribeEvents();
             }
+
+            base.OnParentSet();
         }
 
         private void SubscribeEvents()
