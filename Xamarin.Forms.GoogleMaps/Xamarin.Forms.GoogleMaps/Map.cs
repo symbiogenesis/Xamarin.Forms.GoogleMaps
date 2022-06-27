@@ -986,6 +986,7 @@ namespace Xamarin.Forms.GoogleMaps
         public void Dispose()
         {
             UnsubscribeEvents();
+            Behaviors.Clear();
             Disposing?.Invoke(this, EventArgs.Empty);
         }
     }
