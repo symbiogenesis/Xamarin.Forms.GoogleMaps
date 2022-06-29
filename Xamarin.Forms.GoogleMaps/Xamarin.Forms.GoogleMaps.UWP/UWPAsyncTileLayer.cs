@@ -46,7 +46,7 @@ namespace Xamarin.Forms.GoogleMaps.UWP
                     writer.WriteBytes(pixelData);
                     await writer.StoreAsync();
                     await writer.FlushAsync();
-                    args.Request.PixelData = RandomAccessStreamReference.CreateFromStream(randomAccessInputStream);
+                    args.Request.PixelData = RandomAccessStreamReference.CreateFromStream(randomAccessOutputStream);
                 }
                 deferral.Complete();
             }
