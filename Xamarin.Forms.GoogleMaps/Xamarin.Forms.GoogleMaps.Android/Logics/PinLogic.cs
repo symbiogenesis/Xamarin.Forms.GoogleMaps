@@ -81,7 +81,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .SetPosition(new LatLng(outerItem.Position.Latitude, outerItem.Position.Longitude))
                 .SetTitle(outerItem.Label)
                 .SetSnippet(outerItem.Address)
-                .SetSnippet(outerItem.Address)
                 .Draggable(outerItem.IsDraggable)
                 .SetRotation(outerItem.Rotation)
                 .Anchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y)
