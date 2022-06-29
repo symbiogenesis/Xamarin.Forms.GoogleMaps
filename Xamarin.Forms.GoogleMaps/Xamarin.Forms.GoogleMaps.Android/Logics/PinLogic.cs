@@ -319,12 +319,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem.Icon?.View != null)
             {
                 var iconView = outerItem.Icon.View;
+                var width = Utils.DpToPx((float)iconView.WidthRequest);
+                var height = Utils.DpToPx((float)iconView.HeightRequest);
                 var nativeView = await Utils.ConvertFormsToNative(
-                    iconView, 
-                    new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)), 
+                    iconView,
+                    new Rectangle(0, 0, width, height),
                     Platform.Android.Platform.CreateRendererWithContext(iconView, _context));
                 var otherView = new FrameLayout(nativeView.Context);
-                nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
+                nativeView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
                 otherView.AddView(nativeView);
 
                 var icon = await Utils.ConvertViewToBitmapDescriptor(otherView);
