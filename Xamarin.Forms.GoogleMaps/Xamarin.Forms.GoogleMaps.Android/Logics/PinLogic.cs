@@ -1,13 +1,13 @@
-using Android.Gms.Maps.Model;
-using System.Collections.Generic;
+using Android.Content;
 using Android.Gms.Maps;
-using System.Linq;
-using System.ComponentModel;
-using Xamarin.Forms.GoogleMaps.Android;
-using Xamarin.Forms.GoogleMaps.Android.Extensions;
+using Android.Gms.Maps.Model;
 using Android.Widget;
 using System;
-using Android.Content;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using Xamarin.Forms.GoogleMaps.Android;
+using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Xamarin.Forms.GoogleMaps.Android.Factories;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
@@ -16,9 +16,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
     {
         protected override IList<Pin> GetItems(Map map) => map.Pins;
 
-        private volatile bool _onMarkerEvent = false;
         private Pin _draggingPin;
-        private volatile bool _withoutUpdateNative = false;
+        private volatile bool _onMarkerEvent;
+        private volatile bool _withoutUpdateNative;
 
         private readonly Context _context;
         private readonly IBitmapDescriptorFactory _bitmapDescriptorFactory;
@@ -31,12 +31,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             Context context,
             IBitmapDescriptorFactory bitmapDescriptorFactory,
             Action<Pin, MarkerOptions> onMarkerCreating,
-            Action<Pin, Marker> onMarkerCreated, 
+            Action<Pin, Marker> onMarkerCreated,
             Action<Pin, Marker> onMarkerDeleting,
             Action<Pin, Marker> onMarkerDeleted)
         {
-            _bitmapDescriptorFactory = bitmapDescriptorFactory;
             _context = context;
+            _bitmapDescriptorFactory = bitmapDescriptorFactory;
             _onMarkerCreating = onMarkerCreating;
             _onMarkerCreated = onMarkerCreated;
             _onMarkerDeleting = onMarkerDeleting;
@@ -301,7 +301,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem.Icon != null && outerItem.Icon.Type == BitmapDescriptorType.View)
+            if (outerItem.Icon?.Type == BitmapDescriptorType.View)
             {
                 // If the pin has an IconView set this method will convert it into an icon for the marker
                 TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);
@@ -371,7 +371,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateInfoWindowAnchor(Pin outerItem, Marker nativeItem)
         {
-            nativeItem.SetInfoWindowAnchor((float) outerItem.InfoWindowAnchor.X, (float) outerItem.InfoWindowAnchor.Y);
+            nativeItem.SetInfoWindowAnchor((float)outerItem.InfoWindowAnchor.X, (float)outerItem.InfoWindowAnchor.Y);
         }
 
         protected override void OnUpdateZIndex(Pin outerItem, Marker nativeItem)
@@ -385,4 +385,3 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         }
     }
 }
-
