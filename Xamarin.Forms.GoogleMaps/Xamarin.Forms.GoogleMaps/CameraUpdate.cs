@@ -35,6 +35,7 @@ namespace Xamarin.Forms.GoogleMaps
         {
             UpdateType = CameraUpdateType.CameraPosition;
             CameraPosition = cameraPosition;
+            Zoom = cameraPosition.Zoom;
         }
     }
 }
