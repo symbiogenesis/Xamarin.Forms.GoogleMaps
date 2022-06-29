@@ -1,13 +1,11 @@
-﻿using System;
-using Android.Gms.Maps;
+﻿using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Java.Lang;
+using System;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.GoogleMaps.Internals;
 using static Android.Gms.Maps.GoogleMap;
-using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
-
 using GCameraUpdateFactory = Android.Gms.Maps.CameraUpdateFactory;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
@@ -45,7 +43,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             {
                 return;
             }
-            
+
             nativeMap.CameraChange -= NativeMap_CameraChange;
             nativeMap.CameraMoveStarted -= NativeMap_CameraMoveStarted;
             nativeMap.CameraMove -= NativeMap_CameraMove;
