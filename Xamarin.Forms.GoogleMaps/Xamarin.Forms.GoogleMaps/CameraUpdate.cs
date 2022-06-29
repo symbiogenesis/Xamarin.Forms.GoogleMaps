@@ -4,9 +4,11 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class CameraUpdate
     {
+        private static double lastZoom;
+
         internal CameraUpdateType UpdateType { get; }
         internal Position Position { get; }
-        internal double Zoom { get; }
+        internal double Zoom { get; } = lastZoom;
         internal Bounds Bounds { get; }
         internal int Padding { get; }
         internal CameraPosition CameraPosition { get; }
@@ -22,6 +24,7 @@ namespace Xamarin.Forms.GoogleMaps
             UpdateType = CameraUpdateType.LatLngZoom;
             Position = position;
             Zoom = zoomLv;
+            lastZoom = Zoom;
         }
 
         internal CameraUpdate(Bounds bounds, int padding)
@@ -36,6 +39,7 @@ namespace Xamarin.Forms.GoogleMaps
             UpdateType = CameraUpdateType.CameraPosition;
             CameraPosition = cameraPosition;
             Zoom = cameraPosition.Zoom;
+            lastZoom = Zoom;
         }
     }
 }
