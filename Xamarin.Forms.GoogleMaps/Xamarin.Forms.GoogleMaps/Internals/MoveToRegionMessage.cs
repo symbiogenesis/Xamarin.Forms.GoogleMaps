@@ -4,8 +4,8 @@ namespace Xamarin.Forms.GoogleMaps.Internals
 {
     class MoveToRegionMessage
     {
-        public MapSpan Span { get; private set; }
-        public bool Animate { get; private set; }
+        public MapSpan Span { get; }
+        public bool Animate { get; }
 
         public MoveToRegionMessage(MapSpan mapSpan, bool animate = true)
         {

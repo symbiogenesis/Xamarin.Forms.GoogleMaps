@@ -6,7 +6,7 @@ namespace Xamarin.Forms.GoogleMaps
         public Pin SelectedPin
         {
             get;
-            private set;
+
         }
 
         internal SelectedPinChangedEventArgs(Pin selectedPin)

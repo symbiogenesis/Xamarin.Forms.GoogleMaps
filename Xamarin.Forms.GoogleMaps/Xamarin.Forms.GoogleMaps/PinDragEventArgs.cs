@@ -6,7 +6,7 @@ namespace Xamarin.Forms.GoogleMaps
         public Pin Pin
         {
             get;
-            private set;
+
         }
 
         internal PinDragEventArgs(Pin pin)
