@@ -53,7 +53,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                     }
 
                     var pushPin = pin.NativeObject as PushPin;
-                    if (pushPin?.DetailsView.Visibility != Windows.UI.Xaml.Visibility.Visible)
+                    if (pushPin?.DetailsView?.Visibility != Windows.UI.Xaml.Visibility.Visible)
                     {
                         pushPin.DetailsView.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     }
