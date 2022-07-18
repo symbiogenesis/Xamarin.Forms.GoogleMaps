@@ -1,9 +1,9 @@
+using CoreGraphics;
+using Google.Maps;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using CoreGraphics;
-using Google.Maps;
 using UIKit;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using Xamarin.Forms.GoogleMaps.iOS.Factories;

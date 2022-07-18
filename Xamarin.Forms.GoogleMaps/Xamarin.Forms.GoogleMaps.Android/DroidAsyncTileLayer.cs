@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Android.Gms.Maps.Model;
+using System;
 using System.Threading.Tasks;
-using Android.Gms.Maps.Model;
 using INativeTileProvider = Android.Gms.Maps.Model.ITileProvider;
 
 namespace Xamarin.Forms.GoogleMaps.Android

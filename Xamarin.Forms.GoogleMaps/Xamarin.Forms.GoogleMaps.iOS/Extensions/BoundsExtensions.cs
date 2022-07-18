@@ -1,5 +1,4 @@
-﻿using System;
-using Google.Maps;
+﻿using Google.Maps;
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {
     internal static class BoundsExtensions

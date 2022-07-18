@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Android.Content;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Android.Content;
 using AGeocoder = Android.Locations.Geocoder;
 
 namespace Xamarin.Forms.GoogleMaps.Android

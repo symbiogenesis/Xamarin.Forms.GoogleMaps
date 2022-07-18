@@ -1,7 +1,5 @@
-﻿using System;
-
-using Microsoft.Toolkit.Uwp.UI;
-
+﻿using Microsoft.Toolkit.Uwp.UI;
+using System;
 using Windows.Devices.Geolocation;
 using Windows.UI;
 using Windows.UI.Text;
@@ -10,7 +8,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Shapes;
-
 using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 using Xamarin.Forms.Platform.UWP;
 

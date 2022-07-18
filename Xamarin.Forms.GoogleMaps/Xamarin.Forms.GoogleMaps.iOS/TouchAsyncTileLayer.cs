@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Foundation;
 using Google.Maps;
-using UIKit;
+using System;
 using System.Threading.Tasks;
-using Foundation;
+using UIKit;
 using ATileLayer = Google.Maps.TileLayer;
 
 namespace Xamarin.Forms.GoogleMaps.iOS

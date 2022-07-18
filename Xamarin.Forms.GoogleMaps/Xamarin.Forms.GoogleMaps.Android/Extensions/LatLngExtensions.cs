@@ -1,5 +1,5 @@
-﻿using System;
-using Android.Gms.Maps.Model;
+﻿using Android.Gms.Maps.Model;
+
 namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {
     internal static class LatLngExtensions

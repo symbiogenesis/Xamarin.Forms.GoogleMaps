@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Xamarin.Forms.GoogleMaps.Internals
+﻿namespace Xamarin.Forms.GoogleMaps.Internals
 {
     class MoveToRegionMessage
     {

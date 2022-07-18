@@ -1,11 +1,9 @@
-﻿using System;
-using CoreLocation;
+﻿using CoreAnimation;
 using Google.Maps;
-using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using System;
 using Xamarin.Forms.GoogleMaps.Internals;
-
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using GCameraUpdate = Google.Maps.CameraUpdate;
-using CoreAnimation;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {

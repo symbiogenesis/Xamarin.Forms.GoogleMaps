@@ -1,7 +1,7 @@
 using Android.Gms.Maps;
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System;
 
 namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {

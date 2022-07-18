@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Runtime;
+using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Xamarin.Forms.Platform.Android;

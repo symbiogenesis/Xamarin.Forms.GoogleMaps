@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Android.Runtime;
+﻿using Android.Runtime;
+using System.Collections.Generic;
 
 namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {

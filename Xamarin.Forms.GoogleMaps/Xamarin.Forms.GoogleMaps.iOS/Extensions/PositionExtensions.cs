@@ -1,5 +1,4 @@
-﻿using System;
-using CoreLocation;
+﻿using CoreLocation;
 
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {

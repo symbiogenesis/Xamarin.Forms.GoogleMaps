@@ -1,5 +1,4 @@
-﻿using System;
-using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
+﻿using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
 
 namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {

@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using Android.Gms.Maps;
-using NativeGroundOverlay = Android.Gms.Maps.Model.GroundOverlay;
-using Android.Gms.Maps.Model;
-using Xamarin.Forms.GoogleMaps.Android.Extensions;
-using System.Linq;
-using Xamarin.Forms.GoogleMaps.Android.Factories;
-using Xamarin.Forms.GoogleMaps.Android;
-using Android.Widget;
 using Android.Content;
+using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
+using Android.Widget;
+using System.Collections.Generic;
+using System.Linq;
+using Xamarin.Forms.GoogleMaps.Android;
+using Xamarin.Forms.GoogleMaps.Android.Extensions;
+using Xamarin.Forms.GoogleMaps.Android.Factories;
+using NativeGroundOverlay = Android.Gms.Maps.Model.GroundOverlay;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {

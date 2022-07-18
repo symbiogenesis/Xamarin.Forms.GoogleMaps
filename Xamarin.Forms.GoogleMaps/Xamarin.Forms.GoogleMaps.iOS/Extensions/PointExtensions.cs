@@ -1,5 +1,5 @@
-﻿using System;
-using CoreGraphics;
+﻿using CoreGraphics;
+
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {
     internal static class PointExtensions

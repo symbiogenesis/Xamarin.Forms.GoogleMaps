@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CoreGraphics;
 using Google.Maps;
-using Xamarin.Forms.GoogleMaps.Logics;
-using NativeGroundOverlay = Google.Maps.GroundOverlay;
-using Xamarin.Forms.GoogleMaps.iOS.Extensions;
-using CoreGraphics;
+using System.Collections.Generic;
 using System.Linq;
-using Xamarin.Forms.GoogleMaps.iOS.Factories;
 using UIKit;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using Xamarin.Forms.GoogleMaps.iOS.Factories;
+using NativeGroundOverlay = Google.Maps.GroundOverlay;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {

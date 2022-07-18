@@ -1,16 +1,16 @@
 ﻿// Original code from https://github.com/javiholcman/Wapps.Forms.Map/
 // Cacheing implemented by Gadzair
 
-using System;
 using Android.Graphics;
-using Android.Views;
-using Xamarin.Forms.Platform.Android;
-using System.Collections.Generic;
-using Java.Nio;
-using System.Security.Cryptography;
 using Android.Runtime;
-using System.Threading.Tasks;
+using Android.Views;
+using Java.Nio;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using Xamarin.Forms.Platform.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {

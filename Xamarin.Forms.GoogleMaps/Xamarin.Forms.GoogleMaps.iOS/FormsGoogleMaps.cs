@@ -1,5 +1,4 @@
-﻿using System;
-using Google.Maps;
+﻿using Google.Maps;
 using Xamarin.Forms.GoogleMaps.iOS;
 
 namespace Xamarin

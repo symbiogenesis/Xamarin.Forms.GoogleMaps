@@ -1,11 +1,10 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Gms.Common;
 using Android.Gms.Maps;
 using Android.OS;
+using System;
 using Xamarin.Forms.GoogleMaps.Android;
-using Xamarin.Forms.GoogleMaps.Android.Factories;
 
 namespace Xamarin
 {

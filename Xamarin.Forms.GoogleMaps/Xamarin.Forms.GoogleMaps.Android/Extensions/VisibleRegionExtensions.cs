@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Gms.Maps.Model;
+﻿using Android.Gms.Maps.Model;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 
 namespace Xamarin.Forms.GoogleMaps.Android

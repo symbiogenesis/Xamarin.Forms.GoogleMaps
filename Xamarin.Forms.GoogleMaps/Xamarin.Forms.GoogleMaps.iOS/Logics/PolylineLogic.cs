@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Google.Maps;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using Google.Maps;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using Xamarin.Forms.Platform.iOS;
 using NativePolyline = Google.Maps.Polyline;

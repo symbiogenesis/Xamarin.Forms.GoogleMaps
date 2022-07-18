@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using System.Collections.Generic;
+using System.Linq;
+using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.Platform.Android;
 using NativeCircle = Android.Gms.Maps.Model.Circle;
-using Xamarin.Forms.GoogleMaps.Android;
-using Android.Gms.Maps;
-using System.Linq;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Foundation;
+using System;
 using UIKit;
-using Foundation;
 using NativeSyncTileLayer = Google.Maps.SyncTileLayer;
 
 namespace Xamarin.Forms.GoogleMaps.iOS

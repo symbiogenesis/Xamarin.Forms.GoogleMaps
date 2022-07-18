@@ -1,6 +1,4 @@
-﻿using System;
-using Android.Gms.Maps;
-using Xamarin.Forms.GoogleMaps.Logics;
+﻿using Android.Gms.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {

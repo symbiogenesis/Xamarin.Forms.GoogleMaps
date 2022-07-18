@@ -1,14 +1,13 @@
 ﻿// Original code from https://github.com/javiholcman/Wapps.Forms.Map/
 // Cacheing implemented by Gadzair
 
-using UIKit;
 using CoreGraphics;
-using Xamarin.Forms.Platform.iOS;
-using System.Security.Cryptography;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using UIKit;
+using Xamarin.Forms.Platform.iOS;
 
 namespace Xamarin.Forms.GoogleMaps
 {

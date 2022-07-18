@@ -1,6 +1,4 @@
-﻿using System;
-using Google.Maps;
-using GCameraPosition = Google.Maps.CameraPosition;
+﻿using GCameraPosition = Google.Maps.CameraPosition;
 
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {

@@ -1,21 +1,20 @@
-﻿using System;
+﻿using Android.Content;
+using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
+using Android.Graphics;
+using Android.OS;
+using Android.Views;
+using Android.Widget;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using Android.Gms.Maps;
-using Android.Gms.Maps.Model;
-using Android.OS;
-using Xamarin.Forms.Platform.Android;
-using Math = System.Math;
-using Android.Content;
-using Android.Graphics;
-using Xamarin.Forms.GoogleMaps.Logics.Android;
-using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
-using Android.Widget;
-using Android.Views;
 using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.Logics.Android;
+using Xamarin.Forms.Platform.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {

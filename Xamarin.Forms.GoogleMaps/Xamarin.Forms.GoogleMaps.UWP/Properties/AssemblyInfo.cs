@@ -1,9 +1,9 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Xamarin.Forms.GoogleMaps;
+using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.UWP;
 using Xamarin.Forms.Platform.UWP;
-using Xamarin.Forms.GoogleMaps.Internals;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information

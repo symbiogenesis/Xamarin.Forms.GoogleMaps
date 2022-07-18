@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Android.Gms.Maps.Model;
 using Xamarin.Forms.GoogleMaps.Android;
 using NativeTileOverlay = Android.Gms.Maps.Model.TileOverlay;
-using Android.Gms.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {

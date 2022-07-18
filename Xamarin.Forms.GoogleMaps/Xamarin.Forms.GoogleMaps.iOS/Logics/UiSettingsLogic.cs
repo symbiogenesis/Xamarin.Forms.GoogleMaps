@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace Xamarin.Forms.GoogleMaps.Logics.iOS
+﻿namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
     internal sealed class UiSettingsLogic : BaseUiSettingsLogic<Google.Maps.MapView>
     {

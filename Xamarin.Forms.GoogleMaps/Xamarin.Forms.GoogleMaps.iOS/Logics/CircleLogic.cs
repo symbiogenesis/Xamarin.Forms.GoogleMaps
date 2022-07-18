@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Google.Maps;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Google.Maps;
-using Xamarin.Forms.GoogleMaps.iOS.Extensions;
-using NativeCircle = Google.Maps.Circle;
 using System.Linq;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using Xamarin.Forms.Platform.iOS;
+using NativeCircle = Google.Maps.Circle;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {

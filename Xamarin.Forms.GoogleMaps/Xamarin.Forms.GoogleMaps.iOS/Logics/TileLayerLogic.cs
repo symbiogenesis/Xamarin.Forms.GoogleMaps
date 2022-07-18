@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Foundation;
+using Google.Maps;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Foundation;
-using Google.Maps;
 using Xamarin.Forms.GoogleMaps.iOS;
 using NativeTileLayer = Google.Maps.TileLayer;
 using NativeUrlTileLayer = Google.Maps.UrlTileLayer;

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Google.Maps;
+﻿using Google.Maps;
+using System.Collections.Generic;
 
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
-using Xamarin.Forms.Platform.UWP;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 {

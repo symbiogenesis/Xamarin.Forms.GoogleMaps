@@ -1,5 +1,5 @@
-﻿using System;
-using Android.Graphics;
+﻿using Android.Graphics;
+using System;
 using AndroidBitmapDescriptor = Android.Gms.Maps.Model.BitmapDescriptor;
 using AndroidBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
 
