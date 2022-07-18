@@ -13,6 +13,8 @@ namespace Xamarin.Forms.GoogleMaps
         public int Padding { get; }
         public CameraPosition CameraPosition { get; }
 
+        public CameraUpdate() { }
+
         public CameraUpdate(Position position)
         {
             UpdateType = CameraUpdateType.LatLng;
