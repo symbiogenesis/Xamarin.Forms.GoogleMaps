@@ -46,5 +46,10 @@ namespace Xamarin.Forms.GoogleMaps
         {
             return new Position(left.Latitude - right.Latitude, left.Longitude - right.Longitude);
         }
+
+        public bool IsEmpty()
+        {
+            return Latitude == 0 && Longitude == 0;
+        }
     }
 }
