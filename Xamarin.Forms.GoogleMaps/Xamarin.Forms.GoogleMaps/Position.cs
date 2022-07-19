@@ -10,9 +10,9 @@ namespace Xamarin.Forms.GoogleMaps
             Longitude = Math.Min(Math.Max(longitude, -180.0), 180.0);
         }
 
-        public double Latitude { get; }
+        public double Latitude { get; set; }
 
-        public double Longitude { get; }
+        public double Longitude { get; set; }
 
         public override bool Equals(object obj)
         {

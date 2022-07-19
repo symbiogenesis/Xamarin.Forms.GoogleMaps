@@ -6,12 +6,12 @@ namespace Xamarin.Forms.GoogleMaps
     {
         private static double lastZoom;
 
-        public CameraUpdateType UpdateType { get; }
-        public Position Position { get; }
-        public double Zoom { get; } = lastZoom;
-        public Bounds Bounds { get; }
-        public int Padding { get; }
-        public CameraPosition CameraPosition { get; }
+        public CameraUpdateType UpdateType { get; set; }
+        public Position Position { get; set; }
+        public double Zoom { get; set; } = lastZoom;
+        public Bounds Bounds { get; set; }
+        public int Padding { get; set; }
+        public CameraPosition CameraPosition { get; set; }
 
         public CameraUpdate() { }
 
