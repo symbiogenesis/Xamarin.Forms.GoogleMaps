@@ -16,11 +16,10 @@ namespace Xamarin.Forms.GoogleMaps
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
                 return false;
-            if (!(obj is Position) || ReferenceEquals(null, this))
+            if (obj is not Position other)
                 return false;
-            var other = (Position)obj;
             return Latitude == other.Latitude && Longitude == other.Longitude;
         }
 
@@ -29,8 +28,7 @@ namespace Xamarin.Forms.GoogleMaps
             unchecked
             {
                 int hashCode = Latitude.GetHashCode();
-                hashCode = (hashCode * 397) ^ Longitude.GetHashCode();
-                return hashCode;
+                return (hashCode * 397) ^ Longitude.GetHashCode();
             }
         }
 
