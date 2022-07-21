@@ -52,7 +52,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static Bitmap ConvertViewToBitmap(global::Android.Views.View view)
         {
-            Bitmap bitmap = Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
+            var width = view.Width == 0 ? 50 : view.Width;
+            var height = view.Height == 0 ? 50 : view.Height;
+            Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
             Canvas canvas = new Canvas(bitmap);
             view.Draw(canvas);
             return bitmap;
