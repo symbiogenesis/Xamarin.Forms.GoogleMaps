@@ -1,4 +1,4 @@
-﻿// Original code from https://github.com/javiholcman/Wapps.Forms.Map/
+// Original code from https://github.com/javiholcman/Wapps.Forms.Map/
 // Cacheing implemented by Gadzair
 
 using Android.Graphics;
@@ -99,18 +99,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 }//lock lruTracker
                 cache.GetOrAdd(hash, img);
                 return img;
-            });
-        }
-
-        public static global::Android.Widget.FrameLayout AddViewOnFrameLayout(global::Android.Views.View view, int width, int height)
-        {
-            var layout = new global::Android.Widget.FrameLayout(view.Context)
-            {
-                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent)
-            };
-            view.LayoutParameters = new global::Android.Widget.FrameLayout.LayoutParams(width, height);
-            layout.AddView(view);
-            return layout;
         }
     }
 }
