@@ -11,10 +11,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
         internal static Task<GoogleMap> GetGoogleMapAsync(this MapView self)
         {
             var comp = new TaskCompletionSource<GoogleMap>();
-            self.GetMapAsync(new OnMapReadyCallback(map =>
-            {
-                comp.SetResult(map);
-            }));
+            self.GetMapAsync(new OnMapReadyCallback(map => comp.SetResult(map)));
 
             return comp.Task;
         }
@@ -35,4 +32,3 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
         }
     }
 }
-
