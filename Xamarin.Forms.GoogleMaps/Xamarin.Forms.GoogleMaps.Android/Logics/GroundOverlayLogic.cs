@@ -139,19 +139,26 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             nativeItem.ZIndex = outerItem.ZIndex;
         }
 
-        private async void TransformXamarinViewToAndroidBitmap(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        private void TransformXamarinViewToAndroidBitmap(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem.Icon?.View != null)
             {
                 var iconView = outerItem.Icon.View;
-                var nativeView = await Utils.ConvertFormsToNative(
+                var width = Utils.DpToPx((float)iconView.WidthRequest);
+                var height = Utils.DpToPx((float)iconView.HeightRequest);
+                var nativeView = Utils.ConvertFormsToNative(
                     iconView,
-                    new Rectangle(0, 0, Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest)),
+                    new Rectangle(0, 0, width, height),
                     Platform.Android.Platform.CreateRendererWithContext(iconView, _context));
-                var otherView = new FrameLayout(nativeView.Context);
-                nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
+
+                var otherView = new FrameLayout(nativeView.Context)
+                {
+                    LayoutParameters = new FrameLayout.LayoutParams(width, height)
+                };
+
                 otherView.AddView(nativeView);
-                nativeItem.SetImage(await Utils.ConvertViewToBitmapDescriptor(otherView));
+                var bitmapDescriptor = Utils.ConvertViewToBitmapDescriptor(otherView);
+                nativeItem.SetImage(bitmapDescriptor);
                 //nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
                 nativeItem.Visible = true;
             }

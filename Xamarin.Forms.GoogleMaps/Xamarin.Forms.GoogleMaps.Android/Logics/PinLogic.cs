@@ -313,27 +313,32 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
         }
 
-        private async void TransformXamarinViewToAndroidBitmap(Pin outerItem, Marker nativeItem)
+        private void TransformXamarinViewToAndroidBitmap(Pin outerItem, Marker nativeMarker)
         {
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem.Icon?.View != null)
             {
-                var iconView = outerItem.Icon.View;
-                var width = Utils.DpToPx((float)iconView.WidthRequest);
-                var height = Utils.DpToPx((float)iconView.HeightRequest);
-                var nativeView = await Utils.ConvertFormsToNative(
-                    iconView,
+                var xamarinIcon = outerItem.Icon.View;
+                var width = Utils.DpToPx((float)xamarinIcon.WidthRequest);
+                var height = Utils.DpToPx((float)xamarinIcon.HeightRequest);
+                var nativeView = Utils.ConvertFormsToNative(
+                    xamarinIcon,
                     new Rectangle(0, 0, width, height),
-                    Platform.Android.Platform.CreateRendererWithContext(iconView, _context));
-                var otherView = new FrameLayout(nativeView.Context);
-                nativeView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
-                otherView.AddView(nativeView);
+                    Platform.Android.Platform.CreateRendererWithContext(xamarinIcon, _context));
 
-                var icon = await Utils.ConvertViewToBitmapDescriptor(otherView);
+                var nativeFrame = new FrameLayout(nativeView.Context)
+                {
+                    LayoutParameters = new FrameLayout.LayoutParams(width, height)
+                };
+
+                nativeFrame.AddView(nativeView);
+
+                var nativeIcon = Utils.ConvertViewToBitmapDescriptor(nativeFrame);
+
                 if (outerItem.NativeObject != null)
                 {
-                    nativeItem.SetIcon(icon);
-                    nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
-                    nativeItem.Visible = true;
+                    nativeMarker.SetIcon(nativeIcon);
+                    nativeMarker.SetAnchor((float)xamarinIcon.AnchorX, (float)xamarinIcon.AnchorY);
+                    nativeMarker.Visible = true;
                 }
             }
         }
