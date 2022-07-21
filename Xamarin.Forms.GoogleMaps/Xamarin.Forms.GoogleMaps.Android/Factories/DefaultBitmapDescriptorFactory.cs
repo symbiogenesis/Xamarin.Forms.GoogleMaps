@@ -23,6 +23,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Factories
         {
             switch (descriptor.Type)
             {
+                case BitmapDescriptorType.View:
                 case BitmapDescriptorType.Default:
                     return AndroidBitmapDescriptorFactory.DefaultMarker((float)((descriptor.Color.Hue * 360f) % 360f));
                 case BitmapDescriptorType.Bundle:
