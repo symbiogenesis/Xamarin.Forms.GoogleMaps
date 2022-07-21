@@ -1,6 +1,8 @@
+using System;
+
 namespace Xamarin.Forms.GoogleMaps
 {
-    public sealed class CameraPosition
+    public sealed class CameraPosition : IEquatable<CameraPosition>
     {
         public Position Target { get; }
         public double Bearing { get; }
@@ -26,6 +28,17 @@ namespace Xamarin.Forms.GoogleMaps
             Bearing = bearing;
             Tilt = tilt;
             Zoom = zoom;
+        }
+
+        public bool Equals(CameraPosition other)
+        {
+            if (other == this)
+                return true;
+
+            return Target == other?.Target
+                && Zoom == other?.Zoom
+                && Tilt == other?.Tilt
+                && Bearing == other?.Bearing;
         }
     }
 }

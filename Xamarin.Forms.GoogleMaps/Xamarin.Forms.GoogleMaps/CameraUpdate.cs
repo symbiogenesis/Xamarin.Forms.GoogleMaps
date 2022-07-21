@@ -1,8 +1,9 @@
+using System;
 using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public sealed class CameraUpdate
+    public sealed class CameraUpdate : IEquatable<CameraUpdate>
     {
         private static double lastZoom;
 
@@ -42,6 +43,18 @@ namespace Xamarin.Forms.GoogleMaps
             CameraPosition = cameraPosition;
             Zoom = cameraPosition.Zoom;
             lastZoom = Zoom;
+        }
+
+        public bool Equals(CameraUpdate other)
+        {
+            if (this == other)
+                return true;
+
+            return CameraPosition.Equals(other?.CameraPosition)
+                && Padding == other?.Padding
+                && Zoom == other?.Zoom
+                && UpdateType == other?.UpdateType
+                && Bounds.Equals(other?.Bounds);
         }
     }
 }

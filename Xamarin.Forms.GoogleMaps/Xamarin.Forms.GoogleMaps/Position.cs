@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public struct Position
+    public struct Position : IEquatable<Position>
     {
         public Position(double latitude, double longitude)
         {
@@ -20,6 +20,11 @@ namespace Xamarin.Forms.GoogleMaps
                 return false;
             if (obj is not Position other)
                 return false;
+            return Equals(other);
+        }
+
+        public bool Equals(Position other)
+        {
             return Latitude == other.Latitude && Longitude == other.Longitude;
         }
 

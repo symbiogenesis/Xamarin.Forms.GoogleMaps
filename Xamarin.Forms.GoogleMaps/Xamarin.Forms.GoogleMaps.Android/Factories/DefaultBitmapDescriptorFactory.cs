@@ -14,11 +14,11 @@ namespace Xamarin.Forms.GoogleMaps.Android.Factories
         {
             get { return _instance.Value; }
         }
-        
+
         private DefaultBitmapDescriptorFactory()
         {
         }
-        
+
         public AndroidBitmapDescriptor ToNative(BitmapDescriptor descriptor)
         {
             switch (descriptor.Type)

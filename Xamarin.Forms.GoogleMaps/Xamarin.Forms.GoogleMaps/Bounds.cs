@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class Bounds
+    public class Bounds : IEquatable<Bounds>
     {
         public Position SouthWest { get; }
         public Position NorthEast { get; }
@@ -109,7 +109,13 @@ namespace Xamarin.Forms.GoogleMaps
             return SouthWest.Longitude <= position.Longitude && position.Longitude <= NorthEast.Longitude
                     && SouthWest.Latitude <= position.Latitude && position.Latitude <= NorthEast.Latitude;
         }
+
+        public bool Equals(Bounds other)
+        {
+            return SouthWest == other?.SouthWest
+                && SouthEast == other?.SouthEast
+                && NorthWest == other?.NorthWest
+                && NorthEast == other?.NorthEast;
+        }
     }
 }
-
-
