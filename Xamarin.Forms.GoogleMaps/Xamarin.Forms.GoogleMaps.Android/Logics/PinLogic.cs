@@ -334,7 +334,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
                 var nativeIcon = Utils.ConvertViewToBitmapDescriptor(nativeFrame);
 
-                if (outerItem.NativeObject != null)
+                if (nativeMarker != null)
                 {
                     nativeMarker.SetIcon(nativeIcon);
                     nativeMarker.SetAnchor((float)xamarinIcon.AnchorX, (float)xamarinIcon.AnchorY);
