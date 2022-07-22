@@ -45,16 +45,32 @@ namespace Xamarin.Forms.GoogleMaps
             lastZoom = Zoom;
         }
 
-        public bool Equals(CameraUpdate other)
+        public override bool Equals(object obj)
         {
-            if (this == other)
+            if (obj is null)
+                return false;
+
+            if (ReferenceEquals(this, obj))
                 return true;
 
-            return CameraPosition.Equals(other?.CameraPosition)
+            if (obj is CameraUpdate cameraUpdate)
+                return Equals(other: cameraUpdate);
+
+            return false;
+        }
+
+        public bool Equals(CameraUpdate other)
+        {
+            return CameraPosition == other?.CameraPosition
                 && Padding == other?.Padding
                 && Zoom == other?.Zoom
                 && UpdateType == other?.UpdateType
-                && Bounds.Equals(other?.Bounds);
+                && Bounds == other?.Bounds;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

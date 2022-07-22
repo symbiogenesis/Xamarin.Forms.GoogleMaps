@@ -30,15 +30,31 @@ namespace Xamarin.Forms.GoogleMaps
             Zoom = zoom;
         }
 
-        public bool Equals(CameraPosition other)
+        public override bool Equals(object obj)
         {
-            if (other == this)
+            if (obj is null)
+                return false;
+
+            if (ReferenceEquals(this, obj))
                 return true;
 
+            if (obj is CameraPosition cameraPosition)
+                return Equals(other: cameraPosition);
+
+            return false;
+        }
+
+        public bool Equals(CameraPosition other)
+        {
             return Target == other?.Target
                 && Zoom == other?.Zoom
                 && Tilt == other?.Tilt
                 && Bearing == other?.Bearing;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

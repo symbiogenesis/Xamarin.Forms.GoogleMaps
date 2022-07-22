@@ -110,12 +110,31 @@ namespace Xamarin.Forms.GoogleMaps
                     && SouthWest.Latitude <= position.Latitude && position.Latitude <= NorthEast.Latitude;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is null)
+                return false;
+
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            if (obj is Bounds bounds)
+                return Equals(other: bounds);
+
+            return false;
+        }
+
         public bool Equals(Bounds other)
         {
             return SouthWest == other?.SouthWest
                 && SouthEast == other?.SouthEast
                 && NorthWest == other?.NorthWest
                 && NorthEast == other?.NorthEast;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

@@ -18,9 +18,14 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (obj is null)
                 return false;
+
+            if (ReferenceEquals(this, obj))
+                return true;
+
             if (obj is not Position other)
                 return false;
-            return Equals(other);
+
+            return Equals(other: other);
         }
 
         public bool Equals(Position other)
