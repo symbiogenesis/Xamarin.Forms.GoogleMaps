@@ -318,12 +318,24 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem.Icon?.View != null)
             {
                 var xamarinIcon = outerItem.Icon.View;
-                var width = Utils.DpToPx((float)xamarinIcon.WidthRequest);
-                var height = Utils.DpToPx((float)xamarinIcon.HeightRequest);
+
+                if (!(xamarinIcon is AbsoluteLayout xamarinLayout))
+                {
+                    xamarinLayout = new AbsoluteLayout
+                    {
+                        WidthRequest = xamarinIcon.WidthRequest,
+                        HeightRequest = xamarinIcon.HeightRequest
+                    };
+
+                    xamarinLayout.Children.Add(xamarinIcon);
+                }
+
+                var width = Utils.DpToPx((float)xamarinLayout.WidthRequest);
+                var height = Utils.DpToPx((float)xamarinLayout.HeightRequest);
                 var nativeView = Utils.ConvertFormsToNative(
-                    xamarinIcon,
+                    xamarinLayout,
                     new Rectangle(0, 0, width, height),
-                    Platform.Android.Platform.CreateRendererWithContext(xamarinIcon, _context));
+                    Platform.Android.Platform.CreateRendererWithContext(xamarinLayout, _context));
 
                 nativeView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
 
@@ -332,7 +344,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 if (nativeMarker != null)
                 {
                     nativeMarker.SetIcon(nativeIcon);
-                    nativeMarker.SetAnchor((float)xamarinIcon.AnchorX, (float)xamarinIcon.AnchorY);
+                    nativeMarker.SetAnchor((float)xamarinLayout.AnchorX, (float)xamarinLayout.AnchorY);
                     nativeMarker.Visible = true;
                 }
             }
