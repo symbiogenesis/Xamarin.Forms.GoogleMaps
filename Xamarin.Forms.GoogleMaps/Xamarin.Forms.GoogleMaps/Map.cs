@@ -46,7 +46,7 @@ namespace Xamarin.Forms.GoogleMaps
             CameraUpdateFactory.NewPositionZoom(new Position(41.89, 12.49), 10),  // center on Rome by default
             propertyChanged: (bindable, oldValue, newValue) =>
             {
-                ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;
+                ((Map)bindable)._useMoveToRegionAsInitialBounds = false;
             });
 
         public static readonly BindableProperty NewCameraUpdateProperty = BindableProperty.Create(
@@ -82,7 +82,7 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty GroundOverlayItemsProperty = BindableProperty.Create(nameof(GroundOverlayItems), typeof(IEnumerable<GroundOverlay>), typeof(Map), default(IEnumerable<GroundOverlay>),
             propertyChanged: (b, o, n) => ((Map)b).OnGroundOverlayItemsPropertyChanged((IEnumerable<GroundOverlay>)o, (IEnumerable<GroundOverlay>)n));
 
-        private bool _useMoveToRegisonAsInitialBounds = true;
+        private bool _useMoveToRegionAsInitialBounds = true;
 
         public static readonly BindableProperty CameraPositionProperty = BindableProperty.Create(
             nameof(CameraPosition), typeof(CameraPosition), typeof(Map),
@@ -387,10 +387,10 @@ namespace Xamarin.Forms.GoogleMaps
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
 
-            if (_useMoveToRegisonAsInitialBounds)
+            if (_useMoveToRegionAsInitialBounds)
             {
                 InitialCameraUpdate = CameraUpdateFactory.NewBounds(mapSpan.ToBounds(), 0);
-                _useMoveToRegisonAsInitialBounds = false;
+                _useMoveToRegionAsInitialBounds = false;
             }
 
             SendMoveToRegion(new MoveToRegionMessage(mapSpan, animate));
