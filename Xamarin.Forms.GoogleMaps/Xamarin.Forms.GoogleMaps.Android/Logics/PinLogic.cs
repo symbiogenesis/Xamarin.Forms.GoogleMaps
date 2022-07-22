@@ -325,14 +325,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                     new Rectangle(0, 0, width, height),
                     Platform.Android.Platform.CreateRendererWithContext(xamarinIcon, _context));
 
-                var nativeFrame = new FrameLayout(nativeView.Context)
-                {
-                    LayoutParameters = new FrameLayout.LayoutParams(width, height)
-                };
+                nativeView.LayoutParameters = new FrameLayout.LayoutParams(width, height);
 
-                nativeFrame.AddView(nativeView);
-
-                var nativeIcon = Utils.ConvertViewToBitmapDescriptor(nativeFrame);
+                var nativeIcon = Utils.ConvertViewToBitmapDescriptor(nativeView);
 
                 if (nativeMarker != null)
                 {
