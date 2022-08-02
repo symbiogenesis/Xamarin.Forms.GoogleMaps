@@ -360,31 +360,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (map == null)
                 return;
 
-            switch (Map.MapType)
+            map.MapType = Map.MapType switch
             {
-                case MapType.Street:
-                    map.MapType = GoogleMap.MapTypeNormal;
-                    break;
-
-                case MapType.Satellite:
-                    map.MapType = GoogleMap.MapTypeSatellite;
-                    break;
-
-                case MapType.Hybrid:
-                    map.MapType = GoogleMap.MapTypeHybrid;
-                    break;
-
-                case MapType.Terrain:
-                    map.MapType = GoogleMap.MapTypeTerrain;
-                    break;
-
-                case MapType.None:
-                    map.MapType = GoogleMap.MapTypeNone;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                MapType.Street => GoogleMap.MapTypeNormal,
+                MapType.Satellite => GoogleMap.MapTypeSatellite,
+                MapType.Hybrid => GoogleMap.MapTypeHybrid,
+                MapType.Terrain => GoogleMap.MapTypeTerrain,
+                MapType.None => GoogleMap.MapTypeNone,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
         }
 
         private void SetPadding()

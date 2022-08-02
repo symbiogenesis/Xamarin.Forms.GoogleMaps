@@ -16,7 +16,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
         protected override void OnUpdateRotateGesturesEnabled()
         {
-            NativeMap.RotateInteractionMode = Map.UiSettings.RotateGesturesEnabled ? 
+            NativeMap.RotateInteractionMode = Map.UiSettings.RotateGesturesEnabled ?
                 MapInteractionMode.Auto : MapInteractionMode.Disabled;
 
             if (Map.UiSettings.RotateGesturesEnabled != Map.UiSettings.RotateGesturesEnabled)
