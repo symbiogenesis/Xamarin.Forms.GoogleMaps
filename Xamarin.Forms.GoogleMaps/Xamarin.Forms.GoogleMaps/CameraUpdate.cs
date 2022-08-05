@@ -63,6 +63,7 @@ namespace Xamarin.Forms.GoogleMaps
         {
             return CameraPosition == other?.CameraPosition
                 && Padding == other?.Padding
+                && Position == other?.Position
                 && Zoom == other?.Zoom
                 && UpdateType == other?.UpdateType
                 && Bounds == other?.Bounds;
